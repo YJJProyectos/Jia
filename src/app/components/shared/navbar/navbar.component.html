@@ -17,14 +17,16 @@
             <li class="nav-item" routerLinkActive="active">
                 <a class="nav-link" [routerLink]="['heroes']">Heroes</a>
             </li>
+            <li class="nav-item" routerLinkActive="active">
+                <a class="nav-link" [routerLink]="['login']">Login</a>
+            </li>
         </ul>
 
 
-        <form class="form-inline">
-            <input class="form-control" type="search" placeholder="Search" #busqueda aria-label="Search">
-            <button (click)="busqueda == 'true'" class="btn btn-outline-success" type="text">Search</button>
+        <form class="form-inline my-2 my-lg-0" (ngSubmit)="irABusqueda(buscar.value)">
+            <input class="form-control mr-sm-2" type="search" placeholder="Busqueda" aria-label="Search" #buscar>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
         </form>
-
     </div>
 
 </nav>

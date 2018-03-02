@@ -14,6 +14,9 @@ import { KeysPipe } from './pipes/keys.pipe';
 import { FormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 import { InfoComponent } from './components/info/info.component';
+import { BusquedaComponent } from './components/busqueda/busqueda.component';
+import { DatosService } from './services/datos.service';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,9 @@ import { InfoComponent } from './components/info/info.component';
     HeroeComponent,
     HeroesComponent,
     InfoComponent,
-    KeysPipe
+    KeysPipe,
+    BusquedaComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +38,8 @@ import { InfoComponent } from './components/info/info.component';
     HttpModule
   ],
   providers: [
-    HeroesService
+    HeroesService,
+    DatosService
   ],
   bootstrap: [AppComponent]
 })

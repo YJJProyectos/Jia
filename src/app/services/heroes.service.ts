@@ -20,7 +20,9 @@ export class HeroesService {
       'Content-Type' :'application/json'
     });
     return this.http.post( this.heroesURLFB, body, { headers } ).map( res => {
-      console.log(res.json());
+      console.log("Res", res);
+      
+      console.log("Res.json", res.json());
       return res.json();
     })
   }
