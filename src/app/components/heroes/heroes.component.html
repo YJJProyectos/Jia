@@ -1,4 +1,4 @@
-<h1>Heroes</h1>
+<h1 align="center">Heroes</h1>
 <hr>
 
 <div class="row animated fadeIn fast">
@@ -39,6 +39,9 @@
               </button>
                             <button type="button" class="btn btn-outline-danger" (click)="borrarHeroe(k)">
                 Borrar
+              </button>
+                            <button type="button" class="btn btn-outline-info" [routerLink]="['/info',k]" (click)="verBio(k)">
+                Info
               </button>
                         </td>
                     </tr>

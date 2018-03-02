@@ -1,0 +1,30 @@
+<div class="container main-container">
+    <div class="row">
+        <div class="col-md-2">
+            <!-- {{heroe.nombre}} -->
+            <div align="center">
+                <h1>Nombre </h1>
+                <p>{{heroe.nombre}}</p>
+            </div>
+        </div>
+
+
+        <div class="col-md-3">
+            <div align="center">
+                <h1>Casa</h1>
+                <p>{{heroe.casa}}</p>
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <div align="center">
+                <h1>Bio </h1>
+                <p>{{heroe.bio}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div align="center">
+        <button type="button" (click)="volver()" class="btn btn-danger">Volver atras</button>
+    </div>
+</div>

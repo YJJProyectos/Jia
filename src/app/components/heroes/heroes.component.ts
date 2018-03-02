@@ -43,4 +43,9 @@ export class HeroesComponent implements OnInit {
     });
   }
 
+  verBio( dato) {
+    console.log(dato);
+    
+  }
+
 }

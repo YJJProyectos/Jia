@@ -13,6 +13,7 @@ import { HeroesService } from './services/heroes.service';
 import { KeysPipe } from './pipes/keys.pipe';
 import { FormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
+import { InfoComponent } from './components/info/info.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { HttpModule } from "@angular/http";
     NavbarComponent,
     HeroeComponent,
     HeroesComponent,
+    InfoComponent,
     KeysPipe
   ],
   imports: [

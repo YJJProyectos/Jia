@@ -36,6 +36,8 @@ export class HeroeComponent implements OnInit {
         this._heroesService.getHeroe( this.id ).subscribe( heroe => this.heroe = heroe);
       }
     })
+    console.log(this.heroe);
+    
   }
 
   ngOnInit() {
