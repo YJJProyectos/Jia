@@ -7,20 +7,32 @@ import { HomeComponent } from './components/home/home.component';
 import { SearchComponent } from './components/search/search.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { AppRoutingModule } from './app.routes';
-
+import { HeroeComponent } from './components/heroes/heroe.component';
+import { HeroesComponent } from './components/heroes/heroes.component';
+import { HeroesService } from './services/heroes.service';
+import { KeysPipe } from './pipes/keys.pipe';
+import { FormsModule } from "@angular/forms";
+import { HttpModule } from "@angular/http";
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     SearchComponent,
-    NavbarComponent
+    NavbarComponent,
+    HeroeComponent,
+    HeroesComponent,
+    KeysPipe
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpModule
   ],
-  providers: [],
+  providers: [
+    HeroesService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

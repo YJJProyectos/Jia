@@ -1,0 +1,76 @@
+<h3>Heroe <small>{{heroe.nombre}}</small></h3>
+<button [routerLink]="['/heroes']" class="btn btn-outline-danger">
+  Regresar
+</button>
+
+
+<button type="button" class="btn btn-outline-warning" (click)="agregarNuevo(forma)">
+  Limpiar campos para crear nuevo heroe</button>
+
+
+<hr>
+
+<div class="row animated fadeIn fast">
+    <div class="col-md-12">
+
+        <form (ngSubmit)="guardar()" #forma="ngForm" novalidate>
+            <div class="form-group">
+                <label for="">Nombre</label>
+                <input type="text" class="form-control" placeholder="Nombre del heroe" required name="nombre" [(ngModel)]="heroe.nombre" minlength="3" maxlength="25" pattern="[a-zA-Z0-9ñ ]+">
+                <!-- <div class="form-control-feedback" *ngIf="nombre.errors?.required">
+                    Este campo es requerido.
+                </div>
+                <div class="form-control-feedback" *ngIf="nombre.errors?.minlength ">
+                    Por lo menos {{ nombre.errors.minlength.requiredLength }} caracteres.
+                </div> -->
+            </div>
+            <div class="form-group">
+                <label for="">Casa</label>
+                <select name="casa" class="form-control" [(ngModel)]="heroe.casa">
+          <option value="Marvel">Marvel</option>
+          <option value="DC">DC</option>
+        </select>
+            </div>
+            <div class="form-group">
+                <label for="">Bio</label>
+                <textarea type="text" class="form-control" [(ngModel)]="heroe.bio" name="bio">
+      </textarea>
+            </div>
+
+            <!-- <div class="form-group">
+                <button type="submit" (click)="subirDatos()" class="btn btn-outline-primary" [disabled]="!forma.valid">
+              Guardar Cambios</button>
+            </div> -->
+            <button type="text" (click)="subirDatos()" class="btn btn-outline-primary" [disabled]="!forma.valid">
+            Guardar Cambios</button>
+
+
+        </form>
+
+
+    </div>
+</div>
+
+
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal fade negro" id="guardarModal" tabindex="-1" role="dialog" aria-labelledby="guardarModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="guardarModalLabel">Atencion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                Seguro que quiere guardar los datos
+            </div>
+            <div class="modal-footer">
+                <button type="button" (click)="cancela()" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" (click)="guarda()" class="btn btn-primary" data-dismiss="modal">Guardar Datos</button>
+            </div>
+        </div>
+    </div>
+</div>
