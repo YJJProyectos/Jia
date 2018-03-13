@@ -2,7 +2,7 @@ export interface Datos {
 
   id: number,
   nombre: string,
-  apellido: string,
+  dato: string,
   direccion?: string
 
 }

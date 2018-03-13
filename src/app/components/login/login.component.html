@@ -1,6 +1,32 @@
 <div class="container main-container">
-    <input class="form-control" type="text" [(ngModel)]="nombre" name="nombre" placeholder="Ingrese su nombre">
+    
+  <div align="center">
+    <button *ngIf="!_logeoService.usuario.nombre" type="button" class="btn btn-outline-primary" (click)="login()">Ingresar</button>
+    <button *ngIf="_logeoService.usuario.nombre" type="button" class="btn btn-outline-danger" (click)="logout()">Cerrar Sesion</button>
+  </div>
+  
+</div>
+<div class="container main-container" *ngIf="_logeoService.usuario.nombre">
 
-    <button type="button" class="btn btn-outline-primary" (click)="login()">Ingresar</button>
+    <input class="form-control" type="text" [(ngModel)]="dato" name="dato" placeholder="Dato a guardar">
+    <div align="right">
+            <button  type="button" class="btn btn-outline-warning" [routerLink]="['/datos']" >Ver Datos Guardados</button>
+            <button  type="button" class="btn btn-outline-success" (click)="publicarDato()">Publicar datos</button>
+    </div>
 
+    <div class="row main-container">
+        <div class="col-md-6" >
+
+            <p align="center">Logeado con nombre {{_logeoService.usuario.nombre}} </p>
+
+
+        </div>
+
+        <div class="col-md-6">
+
+            <p align="center">Logeado con UID {{_logeoService.usuario.uid}} </p>
+
+
+        </div>
+    </div>
 </div>

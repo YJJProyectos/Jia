@@ -1,0 +1,47 @@
+<div class="container main-container">
+  <div align="right" >
+    
+    <button type="button" class="btn btn-danger" [routerLink]="['/login']" >Volver</button>
+    
+  </div>
+  <div class="row">
+      <div class="col-md-12">
+          <div class="table-responsive">
+              <table class="table">
+                  <thead class="thead-inverse">
+                      <tr>
+                          <th>Id</th>
+                          <th>Nombre</th>
+                          <th>Datos</th>
+                          <th class="text-right text-center">Opciones</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let k of datos | keys;let i = index; let heroe of datos">
+                          <td>{{i + 1}}</td>
+                          <td>{{datos[k].nombre}}</td>
+                          <td>{{datos[k].dato}}</td>
+                          <td class="text-right text-center">
+                              <button type="button" class="btn btn-outline-success">
+                Editar
+                </button>
+                              <button type="button" class="btn btn-outline-danger">
+                  Borrar
+                </button>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+
+              <div *ngIf="(datos | keys).length === 0 && !loading" class="alert alert-info" role="alert">
+                  <strong>No hay</strong> registros que mostrar
+              </div>
+
+              <div *ngIf="loading" class="alert alert-warning" role="alert">
+                  <strong>Cargando</strong> espere
+              </div>
+
+          </div>
+      </div>
+  </div>
+</div>

@@ -17,6 +17,13 @@ import { InfoComponent } from './components/info/info.component';
 import { BusquedaComponent } from './components/busqueda/busqueda.component';
 import { DatosService } from './services/datos.service';
 import { LoginComponent } from './components/login/login.component';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireStorageModule } from 'angularfire2/storage';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { environment } from '../environments/environment';
+import { LogeoService } from './services/logeo.service';
+import { DatosLogeadoComponent } from './components/datos-logeado/datos-logeado.component';
 
 @NgModule({
   declarations: [
@@ -29,17 +36,23 @@ import { LoginComponent } from './components/login/login.component';
     InfoComponent,
     KeysPipe,
     BusquedaComponent,
-    LoginComponent
+    LoginComponent,
+    DatosLogeadoComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule, // imports firebase/firestore, only needed for database features
+    AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
+    AngularFireStorageModule // imports firebase/storage only needed for storage features
   ],
   providers: [
     HeroesService,
-    DatosService
+    DatosService,
+    LogeoService
   ],
   bootstrap: [AppComponent]
 })

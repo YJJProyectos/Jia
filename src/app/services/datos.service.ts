@@ -10,12 +10,12 @@ export class DatosService {
 
   constructor(private http: Http) { }
 
-  cargarDatos( persona: Datos ){
+  cargarDatos( persona: Datos, uid : string ){
     let body = JSON.stringify(persona);
     let headers = new Headers( {
       'Content-Type' :'application/json'
     });
-    return this.http.post( this.datosURL +  persona.nombre +".json"
+    return this.http.post( this.datosURL + uid + "/datos" +".json"
           , body, { headers } )
           .map( res => {
       console.log("Res", res);
@@ -23,6 +23,11 @@ export class DatosService {
       console.log("Res.json", res.json());
       return res.json();
     })
+  }
+
+  getDatos( uid : string) {
+    return this.http.get(this.datosURL + uid + "/datos" +'.json')
+          .map( res => res.json() );
   }
 
 }
