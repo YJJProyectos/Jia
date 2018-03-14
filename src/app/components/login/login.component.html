@@ -30,10 +30,14 @@
 
         </div>
     </div>
-
+    <div align="center" style="margin-bottom: 10px" >
+        <h6 style="margin-bottom: 10px">Cargar archivos</h6>
+        <input type="file" (change)="verDatos($event)" placeholder="Upload file" multiple 
+               accept=".pdf,.doc,.docx,.wav,.mp3,.jpg,.png">
+    </div>
     <h5 align="center" >Audios</h5>
      <audio controls>
-        <source [src]="">
+        <source [src]="'https://firebasestorage.googleapis.com/v0/b/heroesapp-cb895.appspot.com/o/sound%2F1%20DO.wav?alt=media&token=46a28495-bbd3-49ae-9e34-5faf5fbdc7d4'">
             Tu navegador es muy viejo
     </audio>
 </div>

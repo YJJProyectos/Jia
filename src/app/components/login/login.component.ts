@@ -53,8 +53,20 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  verDatos() {
-    return
+  verDatos(event) {
+    // let file: File;
+    let fileList: FileList = event.target.files;
+    if(fileList.length > 0) {
+
+      for (let i = 0; i < fileList.length; i++){
+        let file = fileList[i];
+        console.log("Elijio ", file.name );
+        console.log("Tipo archivo ", file.type);
+        
+      }
+    }
+      
+    return 
   }
 
   login() {
