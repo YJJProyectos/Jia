@@ -7,6 +7,7 @@ import { Datos } from '../interfaces/datos.interface';
 export class DatosService {
 
   datosURL: string = "https://heroesapp-cb895.firebaseio.com/";
+  uid: string;
 
   constructor(private http: Http) { }
 
@@ -26,8 +27,17 @@ export class DatosService {
   }
 
   getDatos( uid : string) {
+    this.uid = uid;
     return this.http.get(this.datosURL + uid + "/datos" +'.json')
           .map( res => res.json() );
   }
+
+  borrarDato( key$ : string) {
+    let url = `${ this.datosURL}${ this.uid }/datos/${ key$ }.json`;
+    console.log("La URL es : ", url);
+    
+    return this.http.delete(url)
+          .map( res => res.json());    
+  } 
 
 }

@@ -34,4 +34,20 @@ export class DatosLogeadoComponent implements OnInit {
   ngOnInit() {
   }
 
+  borrarDato( key$ : string) {
+    this._datosService.borrarDato(key$).subscribe( respuesta => {
+      // console.log(respuesta);
+      if (respuesta) {
+        console.error(respuesta);
+        
+      } else {
+        // si se borra
+        console.log("Datos: ", this.datos);
+        console.log("Borrar dato: ", this.datos[key$]);
+        
+        delete this.datos[key$];
+      }
+    });    
+  }
+
 }
