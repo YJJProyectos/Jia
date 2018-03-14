@@ -8,7 +8,8 @@
 </div>
 <div class="container main-container" *ngIf="_logeoService.usuario.nombre">
 
-    <input class="form-control" type="text" [(ngModel)]="dato" name="dato" placeholder="Dato a guardar">
+    <input class="form-control" type="text" [(ngModel)]="dato" name="dato" placeholder="Dato a guardar"
+        (keyup.enter)="publicarDato()">
     <div align="right">
             <button  type="button" class="btn btn-outline-warning" [routerLink]="['/datos']" >Ver Datos Guardados</button>
             <button  type="button" class="btn btn-outline-success" (click)="publicarDato()">Publicar datos</button>
