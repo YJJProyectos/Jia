@@ -11,7 +11,7 @@
     <input class="form-control" type="text" [(ngModel)]="dato" name="dato" placeholder="Dato a guardar"
         (keyup.enter)="publicarDato()">
     <div align="right">
-            <button  type="button" class="btn btn-outline-warning" [routerLink]="['/datos']" >Ver Datos Guardados</button>
+            <button  type="button" class="btn btn-outline-warning" [routerLink]="['/datos']" >Ver Datos Guardados </button>
             <button  type="button" class="btn btn-outline-success" (click)="publicarDato()">Publicar datos</button>
     </div>
 
@@ -34,10 +34,39 @@
         <h6 style="margin-bottom: 10px">Cargar archivos</h6>
         <input type="file" (change)="verDatos($event)" placeholder="Upload file" multiple 
                accept=".pdf,.doc,.docx,.wav,.mp3,.jpg,.png">
+        <button class="btn btn-outline-primary" *ngIf="archivosCargados" (click)="subirArchivos()" >Subir datos a la nube</button>
+        <button class="btn btn-outline-success" (click)="getImagenesYSonidos()" >Obtener Imagenes y Sonidos</button>
     </div>
     <h5 align="center" >Audios</h5>
-     <audio controls>
-        <source [src]="'https://firebasestorage.googleapis.com/v0/b/heroesapp-cb895.appspot.com/o/sound%2F1%20DO.wav?alt=media&token=46a28495-bbd3-49ae-9e34-5faf5fbdc7d4'">
+    <table class="table table-dark">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Escuchar</th>
+          </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let k of sonidos | keys;let i = index;">
+              <td>{{ i + 1 }}</td>
+              <td> {{ sonidos[k].nombre }} </td>
+              <td>
+
+                <audio controls>
+                  <source [src]="sonidos[k].url">
+                  Tu navegador es muy viejo
+                </audio>
+
+              </td>
+            </tr>
+          </tbody>
+
+        </table>
+
+     <!-- <audio controls *ngFor="let k of sonidos | keys;let i = index;" >
+        <source [src]="sonidos[k].url">
             Tu navegador es muy viejo
-    </audio>
+    </audio> -->
+
 </div>

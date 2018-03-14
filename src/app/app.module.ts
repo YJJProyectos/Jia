@@ -24,6 +24,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { LogeoService } from './services/logeo.service';
 import { DatosLogeadoComponent } from './components/datos-logeado/datos-logeado.component';
+import { CargaArchivosService } from './services/carga-archivos.service';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { DatosLogeadoComponent } from './components/datos-logeado/datos-logeado.
   providers: [
     HeroesService,
     DatosService,
-    LogeoService
+    LogeoService,
+    CargaArchivosService
   ],
   bootstrap: [AppComponent]
 })

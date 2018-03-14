@@ -3,6 +3,7 @@ import { DatosService } from '../../services/datos.service';
 import { Datos } from '../../interfaces/datos.interface';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { LogeoService } from '../../services/logeo.service';
+import { CargaArchivosService } from '../../services/carga-archivos.service';
 
 @Component({
   selector: 'app-login',
@@ -13,14 +14,18 @@ export class LoginComponent implements OnInit {
 
   nombre : string;
   dato: string = "";
+  archivosCargados = false;
   // persona: Datos;
+  imagenes;
+  sonidos;
 
   constructor(
     public _datosService : DatosService,
-    public _logeoService : LogeoService
-  ) { 
-    console.log("Constructor login");
-    
+    public _logeoService : LogeoService,
+    public _cargaArchivosService : CargaArchivosService
+  ) {
+
+    this.getImagenesYSonidos();
   }
 
   ngOnInit() {
@@ -37,6 +42,23 @@ export class LoginComponent implements OnInit {
   //   console.log(this.nombre);
   //   this._datosService.cargarDatos(nuevaPersona).subscribe();
   // }
+
+  getImagenesYSonidos() {
+  if ( this._logeoService.usuario.nombre ){ 
+    this._datosService.getImagenes()
+      .subscribe( imagenes => {
+        this.imagenes = imagenes;
+        console.log("Imagenes cargadas ", imagenes);
+        
+      });
+    this._datosService.getSonidos()
+        .subscribe( sonidos => {
+          this.sonidos = sonidos;
+          console.log("Sonidos cargados ", sonidos);
+          
+        })
+    }
+  }
 
   publicarDato() {
     if ( this.dato !== "" || this.dato == undefined){
@@ -56,19 +78,31 @@ export class LoginComponent implements OnInit {
   verDatos(event) {
     // let file: File;
     let fileList: FileList = event.target.files;
+    this.archivosCargados = false;
     if(fileList.length > 0) {
 
       for (let i = 0; i < fileList.length; i++){
         let file = fileList[i];
         console.log("Elijio ", file.name );
         console.log("Tipo archivo ", file.type);
-        
+        if ( file.type.startsWith('image')) {
+          this._cargaArchivosService.agregarImagen(file);
+          console.log("Agrego imagen ", file.name);
+        } else if ( file.type.startsWith('audio') ) {
+          this._cargaArchivosService.agregarSonido(file);
+          console.log("Agrego sonido ", file.name);
+        }
       }
+      //cuando termina de cargar todo
+      this.archivosCargados = true;
     }
       
     return 
   }
 
+  subirArchivos() {
+    this._cargaArchivosService.subirArchivos();
+  }
   login() {
     this._logeoService.login();
   }
