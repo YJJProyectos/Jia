@@ -18,10 +18,10 @@ export class CargaArchivosService {
     private _datosService: DatosService
   ) { }
 
-  cargarImagenesFirebase() {
+  cargarImagenesFirebase(imagenes) {
     // console.log(imagenes);
     const storageRef = firebase.storage().ref();
-    for (const item of this.imagenes) {
+    for (const item of imagenes) {
 
       item.estaSubiendo = true;
       if ( item.progreso >= 100 ) {
@@ -55,10 +55,10 @@ export class CargaArchivosService {
   }
 
 
-  cargarSonidoFirebase() {
+  cargarSonidoFirebase(sonidos) {
     // console.log(imagenes);
     const storageRef = firebase.storage().ref();
-    for (const item of this.sonidos) {
+    for (const item of sonidos) {
 
       item.estaSubiendo = true;
       if ( item.progreso >= 100 ) {
@@ -91,9 +91,9 @@ export class CargaArchivosService {
     }
   }
 
-  subirArchivos() {
-    this.cargarImagenesFirebase();
-    this.cargarSonidoFirebase();
+  subirArchivos(imagenes : FileItem[], sonidos : FileItem[]) {
+    this.cargarImagenesFirebase(imagenes);
+    this.cargarSonidoFirebase(sonidos);
   }
 
   borrarSonido( nombre: string, tipo: string ) {

@@ -4,6 +4,7 @@ import { Datos } from '../../interfaces/datos.interface';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { LogeoService } from '../../services/logeo.service';
 import { CargaArchivosService } from '../../services/carga-archivos.service';
+import { FileItem } from '../../models/file-item';
 
 @Component({
   selector: 'app-login',
@@ -16,8 +17,11 @@ export class LoginComponent implements OnInit {
   dato: string = "";
   archivosCargados = false;
   // persona: Datos;
-  imagenes;
-  sonidos;
+  imagenes = null;
+  sonidos = [];
+  archivosSonidosASubir : FileItem[] = [];
+  archivosImagenesASubir: FileItem[] = [];
+  archivosTotalesASubir: FileItem[] = [];
 
   constructor(
     public _datosService : DatosService,
@@ -48,15 +52,21 @@ export class LoginComponent implements OnInit {
   if ( this._logeoService.usuario.nombre ){ 
     this._datosService.getImagenes()
       .subscribe( imagenes => {
-        this.imagenes = imagenes;
-        console.log("Imagenes cargadas ", imagenes);
+        if ( imagenes ) {
+
+          this.imagenes = imagenes;
+          console.log("Imagenes cargadas ", imagenes);
+      }
         
       });
     this._datosService.getSonidos()
         .subscribe( sonidos => {
-          this.sonidos = sonidos;
-          console.log("Sonidos cargados ", sonidos);
-          
+
+          if ( sonidos ) {
+            this.sonidos = sonidos;
+            console.log("Sonidos cargados ", sonidos);
+            
+          }
         })
     }
   }
@@ -87,14 +97,21 @@ export class LoginComponent implements OnInit {
         console.log("Elijio ", file.name );
         console.log("Tipo archivo ", file.type);
         if ( file.type.startsWith('image')) {
-          this._cargaArchivosService.agregarImagen(file);
+
+          // this._cargaArchivosService.agregarImagen(file);
+          this.archivosImagenesASubir.push( new FileItem(file) );
           console.log("Agrego imagen ", file.name);
+
         } else if ( file.type.startsWith('audio') ) {
-          this._cargaArchivosService.agregarSonido(file);
+
+          // this._cargaArchivosService.agregarSonido(file);
+          this.archivosSonidosASubir.push( new FileItem(file) );
           console.log("Agrego sonido ", file.name);
+
         }
       }
       //cuando termina de cargar todo
+      this.archivosTotalesASubir = this.archivosImagenesASubir.concat(this.archivosSonidosASubir);
       this.archivosCargados = true;
     }
       
@@ -102,7 +119,7 @@ export class LoginComponent implements OnInit {
   }
 
   subirArchivos() {
-    this._cargaArchivosService.subirArchivos();
+    this._cargaArchivosService.subirArchivos(this.archivosImagenesASubir, this.archivosSonidosASubir );
   }
 
   borrarSonido( nombre : string, tipoArchivo :string, key$ ) {
@@ -118,9 +135,18 @@ export class LoginComponent implements OnInit {
       } else {
         // si se borra
         delete this.sonidos[key$];
+        console.log("Cantidad de sonidos restante ", );
+        
       }
     });
     return
+  }
+
+  limpiarArchivos() {
+    this.archivosTotalesASubir = [];
+    this.archivosImagenesASubir = [];
+    this.archivosSonidosASubir = [];
+    this.archivosCargados = false;
   }
 
 
