@@ -37,33 +37,38 @@
         <button class="btn btn-outline-primary" *ngIf="archivosCargados" (click)="subirArchivos()" >Subir datos a la nube</button>
         <button class="btn btn-outline-success" (click)="getImagenesYSonidos()" >Obtener Imagenes y Sonidos</button>
     </div>
-    <h5 align="center" >Audios</h5>
-    <table class="table table-dark">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Nombre</th>
-            <th>Escuchar</th>
-          </tr>
-        </thead>
-
-        <tbody>
-            <tr *ngFor="let k of sonidos | keys;let i = index;">
-              <td>{{ i + 1 }}</td>
-              <td> {{ sonidos[k].nombre }} </td>
-              <td>
-
-                <audio controls>
-                  <source [src]="sonidos[k].url">
-                  Tu navegador es muy viejo
-                </audio>
-
-              </td>
+    <div *ngIf="sonidos !== undefined" >
+        <h5 align="center" >Audios</h5>
+        <table class="table table-dark">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Escuchar</th>
+                <th>Opciones</th>
             </tr>
-          </tbody>
+            </thead>
 
-        </table>
+            <tbody>
+                <tr *ngFor="let k of sonidos | keys;let i = index;">
+                <td>{{ i + 1 }}</td>
+                <td> {{ sonidos[k].nombre }} </td>
+                <td>
 
+                    <audio controls>
+                    <source [src]="sonidos[k].url">
+                    Tu navegador es muy viejo
+                    </audio>
+                </td>
+                <td>
+                    <button class="btn btn-outline-danger" 
+                    (click)="borrarSonido(sonidos[k].nombre, sonidos[k].tipo, k)" >Borrar</button>
+                </td>
+                </tr>
+            </tbody>
+
+            </table>
+    </div>   
      <!-- <audio controls *ngFor="let k of sonidos | keys;let i = index;" >
         <source [src]="sonidos[k].url">
             Tu navegador es muy viejo

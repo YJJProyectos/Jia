@@ -81,11 +81,21 @@ export class DatosService {
   }
 
   borrarDato( key$ : string) {
-    let url = `${ this.datosURL}${ this.uid }/datos/${ key$ }.json`;
+    let uid = this._logeoService.usuario.uid
+    let url = `${ this.datosURL}${ uid }/datos/${ key$ }.json`;
     console.log("La URL es : ", url);
     
     return this.http.delete(url)
           .map( res => res.json());    
   } 
+
+  borrarSonido( key$ : string ) {
+    let uid = this._logeoService.usuario.uid
+    let url = `${ this.datosURL}${ uid }/sound/${ key$ }.json`;
+    console.log("La URL es : ", url);
+    
+    return this.http.delete(url)
+          .map( res => res.json());        
+  }
 
 }

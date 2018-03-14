@@ -24,7 +24,8 @@ export class LoginComponent implements OnInit {
     public _logeoService : LogeoService,
     public _cargaArchivosService : CargaArchivosService
   ) {
-
+    console.log("Sonidos ", this.sonidos);
+    
     this.getImagenesYSonidos();
   }
 
@@ -103,6 +104,26 @@ export class LoginComponent implements OnInit {
   subirArchivos() {
     this._cargaArchivosService.subirArchivos();
   }
+
+  borrarSonido( nombre : string, tipoArchivo :string, key$ ) {
+    console.log("Tipo ", tipoArchivo);
+    this._cargaArchivosService.borrarSonido(nombre, tipoArchivo);
+    console.log("Borrar del arreglo de sonidos ", this.sonidos[key$]);
+    
+    this._datosService.borrarSonido(key$).subscribe( respuesta => {
+      // console.log(respuesta);
+      if (respuesta) {
+        console.error(respuesta);
+        
+      } else {
+        // si se borra
+        delete this.sonidos[key$];
+      }
+    });
+    return
+  }
+
+
   login() {
     this._logeoService.login();
   }

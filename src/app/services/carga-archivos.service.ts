@@ -46,7 +46,8 @@ export class CargaArchivosService {
           // });
           this._datosService.subirImagen({
               nombre: item.nombreArchivo,
-              url: item.url
+              url: item.url,
+              tipo: item.tipoArchivo
           }).subscribe() ;
         }); 
 
@@ -82,7 +83,8 @@ export class CargaArchivosService {
           // });
           this._datosService.subirSonido({
             nombre: item.nombreArchivo,
-            url: item.url
+            url: item.url,
+            tipo: item.tipoArchivo
           }).subscribe();
         }); 
 
@@ -92,6 +94,26 @@ export class CargaArchivosService {
   subirArchivos() {
     this.cargarImagenesFirebase();
     this.cargarSonidoFirebase();
+  }
+
+  borrarSonido( nombre: string, tipo: string ) {
+
+    // Create a reference to the file to delete
+    const storageRef = firebase.storage().ref();
+    let urlNombre = `${this._datosService._logeoService.usuario.uid}/${ this.CARPETA_SONIDOS}/${ nombre }`;
+    console.log("Ruta de archivo de sondio a borrar ", urlNombre);
+    
+    var desertRef = storageRef.child(urlNombre);
+    
+    // Delete the file
+    desertRef.delete().then(function() {
+      console.log("Borrado exitoso de archivo de sonido");
+      
+    }).catch(function(error) {
+      console.error("No se pudo borrar el archivo de sonido");
+      
+    });    
+
   }
 
 
