@@ -9,6 +9,7 @@
   </div>
   
 </div>
+
 <div class="container main-container" *ngIf="_logeoService.usuario.nombre">
 
     <input class="form-control" type="text" [(ngModel)]="dato" name="dato" placeholder="Dato a guardar"
@@ -111,11 +112,17 @@
 
             </table>
     </div>   
-     <!-- <audio controls *ngFor="let k of sonidos | keys;let i = index;" >
-        <source [src]="sonidos[k].url">
-            Tu navegador es muy viejo
-    </audio> -->
 
+
+    <div class="row" *ngIf="imagenes !== null" >
+        <div *ngFor="let k of imagenes | keys " >
+            <a [href]="imagenes[k].url" download>
+                <img [src]="imagenes[k].url" alt="">
+            </a>
+        </div>
+    </div>
+
+<!-- DIV CONTAINER FINAL -->
 </div>
 
 <!-- Modal -->
