@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'info/:heroe', component: InfoComponent },
   { path: 'busqueda/:texto', component: BusquedaComponent },
   { path: 'datos', component: DatosLogeadoComponent },
-  { path: '', pathMatch: 'full', redirectTo: 'home'},
+  { path: '', pathMatch: 'full', redirectTo: 'login'},
 ];
 
 @NgModule({
