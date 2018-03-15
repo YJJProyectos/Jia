@@ -665,7 +665,7 @@ var InfoComponent = /** @class */ (function () {
 /***/ "../../../../../src/app/components/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container main-container\" style=\"width: 100%\">\n    \n  <div align=\"center\">\n    <h1>Login</h1>\n    <h3>Subida de imagenes y audios</h3>\n    <hr>\n    <button *ngIf=\"!_logeoService.usuario.nombre\" type=\"button\" class=\"btn btn-outline-primary\" (click)=\"login()\">Ingresar</button>\n    <button *ngIf=\"_logeoService.usuario.nombre\" type=\"button\" class=\"btn btn-outline-danger\" (click)=\"logout()\">Cerrar Sesion</button>\n  </div>\n  \n</div>\n<div class=\"container main-container\" *ngIf=\"_logeoService.usuario.nombre\">\n\n    <input class=\"form-control\" type=\"text\" [(ngModel)]=\"dato\" name=\"dato\" placeholder=\"Dato a guardar\"\n        (keyup.enter)=\"publicarDato()\">\n    <div align=\"center\">\n            <button  type=\"button\" class=\"btn btn-outline-warning\" [routerLink]=\"['/datos']\" >Ver Datos Guardados </button>\n            <button  type=\"button\" class=\"btn btn-outline-success\" (click)=\"publicarDato()\">Publicar datos</button>\n    </div>\n\n    <div class=\"row main-container\">\n        <div class=\"col-md-6\" >\n\n            <p align=\"center\">Logeado con nombre {{_logeoService.usuario.nombre}} </p>\n\n\n        </div>\n\n        <div class=\"col-md-6\">\n\n            <p align=\"center\">Logeado con UID {{_logeoService.usuario.uid}} </p>\n\n\n        </div>\n    </div>\n    <div align=\"center\" style=\"margin-bottom: 10px\" >\n        <h6 style=\"margin-bottom: 10px\">Cargar archivos</h6>\n        <input type=\"file\" (change)=\"verDatos($event)\" placeholder=\"Upload file\" multiple \n               accept=\".pdf,.doc,.docx,.wav,.mp3,.jpg,.png\">\n        <button class=\"btn btn-outline-primary\" [disabled]=\"subiendo\" *ngIf=\"archivosCargados\" (click)=\"subirArchivos()\" >Subir datos a la nube</button>\n\n        <button class=\"btn btn-outline-danger\" (click)=\"limpiarArchivos()\" >Limpiar</button>\n\n    </div>\n\n    <div align=\"center\" style=\"margin-bottom: 10px\" >\n        <button class=\"btn btn-outline-success\" (click)=\"getImagenesYSonidos()\" >Ver audio subidos</button>\n        <button class=\"btn btn-outline-success\" (click)=\"getImagenesYSonidos()\" >Ver imagenes subidas</button>\n    </div>\n\n    <table class=\"table\" *ngIf=\"archivosTotalesASubir.length > 0\" >\n            <thead class=\"thead=dark\">\n                <tr>\n                    <th>Nombre Archivo</th>\n                    <th>Tamaño</th>\n                    <th>Progreso</th>\n                </tr>\n            </thead>\n\n            <tbody>\n                <tr *ngFor=\"let archivo of archivosTotalesASubir\">\n                    <td>{{archivo.nombreArchivo}}</td>\n                    <td>{{archivo.archivo.size /1024 / 1024 | number: '.2-2'}} MB</td>\n                    <td>\n                        <div class=\"progress\">\n                            <div class=\"progress-bar bg-danger\" [ngClass]=\"\n                            {'bg-danger': archivo.progreso <= 30,\n                             'bg-warning' : archivo.progreso > 30 && archivo.progreso <= 50,\n                             'bg-info' : archivo.progreso >50 && archivo.progreso <=75,\n                             'bg-success': archivo.progreso == 100 }\" role=\"progressbar\" [ngStyle]=\"{ width: archivo.progreso + '%' }\"></div>\n                        </div>\n                    </td>\n                </tr>\n            </tbody>\n\n        </table>\n\n\n    <div *ngIf=\"sonidos !== null \" style=\"width: 95%\">\n        <h5 align=\"center\" >Audios</h5>\n        <table class=\"table table-dark\">\n            <thead>\n            <tr>\n                <th style=\"width: 5% \">#</th>\n                <th style=\"width: 30% \">Nombre</th>\n                <th style=\"width: 45% \">Escuchar</th>\n                <th style=\"width: 10% \">Opciones</th>\n            </tr>\n            </thead>\n\n            <tbody>\n                <tr *ngFor=\"let k of sonidos | keys;let i = index;\">\n                <td>{{ i + 1 }}</td>\n                <td> {{ sonidos[k].nombre }} </td>\n                <td>\n\n                    <audio controls style=\"width: 100%\">\n                    <source [src]=\"sonidos[k].url\">\n                    Tu navegador es muy viejo\n                    </audio>\n                </td>\n                <td>\n                    <button class=\"btn btn-outline-danger\" \n                    (click)=\"borrarSonido(sonidos[k].nombre, sonidos[k].tipo, k)\" >Borrar</button>\n                </td>\n                </tr>\n            </tbody>\n\n            </table>\n    </div>   \n     <!-- <audio controls *ngFor=\"let k of sonidos | keys;let i = index;\" >\n        <source [src]=\"sonidos[k].url\">\n            Tu navegador es muy viejo\n    </audio> -->\n\n</div>"
+module.exports = "<div class=\"container main-container\" style=\"width: 100%\">\n    \n  <div align=\"center\">\n    <h1>Login</h1>\n    <h3>Subida de imagenes y audios</h3>\n    <hr>\n    <button *ngIf=\"!_logeoService.usuario.nombre\" type=\"button\" class=\"btn btn-outline-primary\" (click)=\"login()\">Ingresar</button>\n    <button *ngIf=\"_logeoService.usuario.nombre\" type=\"button\" class=\"btn btn-outline-danger\" (click)=\"logout()\">Cerrar Sesion</button>\n  </div>\n  \n</div>\n\n<div class=\"container main-container\" *ngIf=\"_logeoService.usuario.nombre\">\n\n    <input class=\"form-control\" type=\"text\" [(ngModel)]=\"dato\" name=\"dato\" placeholder=\"Dato a guardar\"\n        (keyup.enter)=\"publicarDato()\">\n    <div align=\"center\">\n            <button  type=\"button\" class=\"btn btn-outline-warning\" [routerLink]=\"['/datos']\" >Ver Datos Guardados </button>\n            <button  type=\"button\" class=\"btn btn-outline-success\" (click)=\"publicarDato()\">Publicar datos</button>\n    </div>\n\n    <div class=\"row main-container\">\n        <div class=\"col-md-6\" >\n\n            <p align=\"center\">Logeado con nombre {{_logeoService.usuario.nombre}} </p>\n\n\n        </div>\n\n        <div class=\"col-md-6\">\n\n            <p align=\"center\">Logeado con UID {{_logeoService.usuario.uid}} </p>\n\n\n        </div>\n    </div>\n    <div align=\"center\" style=\"margin-bottom: 10px\" >\n        <h1 style=\"margin-bottom: 10px\">Cargar archivos</h1>\n        <hr>\n        <input type=\"file\" (change)=\"verDatos($event)\" placeholder=\"Upload file\" multiple \n               accept=\".pdf,.doc,.docx,.wav,.mp3,.jpg,.png\">\n        <button class=\"btn btn-outline-primary\" [disabled]=\"subiendo\" *ngIf=\"archivosCargados\"  data-toggle=\"modal\" data-target=\"#subirDatosModal\" >Subir datos a la nube</button>\n\n        <button class=\"btn btn-outline-danger\" (click)=\"limpiarArchivos()\" >Limpiar</button>\n\n    </div>\n\n    <div align=\"center\" style=\"margin-bottom: 10px\" >\n        <button class=\"btn btn-outline-success\" (click)=\"getSonidos()\" >Obtener audio subidos</button>\n        <button class=\"btn btn-outline-success\" (click)=\"getImagenes()\" >Obtener imagenes subidas</button>\n        <button class=\"btn btn-outline-danger\" *ngIf=\"datosSonidos\" (click)=\"toggleDatosSonidos()\" >Ocultar/Mostrar audios subidos</button>\n        <button class=\"btn btn-outline-danger\" *ngIf=\"datosImagenes\" (click)=\"toggleDatosImagenes()\" >Ocultar/Mostrar imagenes subidas</button>\n    </div>\n\n    <table class=\"table\" *ngIf=\"archivosTotalesASubir.length > 0\" >\n            <thead class=\"thead=dark\">\n                <tr>\n                    <th>Nombre Archivo</th>\n                    <th>Tamaño</th>\n                    <th>Progreso</th>\n                </tr>\n            </thead>\n\n            <tbody>\n                <tr *ngFor=\"let archivo of archivosTotalesASubir\">\n                    <td>{{archivo.nombreArchivo}}</td>\n                    <td>{{archivo.archivo.size /1024 / 1024 | number: '.2-2'}} MB</td>\n                    <td>\n                        <div class=\"progress\">\n                            <div class=\"progress-bar bg-danger\" [ngClass]=\"\n                            {'bg-danger': archivo.progreso <= 30,\n                             'bg-warning' : archivo.progreso > 30 && archivo.progreso <= 50,\n                             'bg-info' : archivo.progreso >50 && archivo.progreso <=75,\n                             'bg-success': archivo.progreso == 100 }\" role=\"progressbar\" [ngStyle]=\"{ width: archivo.progreso + '%' }\"></div>\n                        </div>\n                    </td>\n                </tr>\n            </tbody>\n\n        </table>\n\n\n    <div *ngIf=\"sonidos !== null \" style=\"width: 95%\">\n        <h5 align=\"center\" >Audios</h5>\n        <table class=\"table table-dark\">\n            <thead>\n            <tr>\n                <th style=\"width: 5% \">#</th>\n                <th style=\"width: 30% \">Nombre</th>\n                <th style=\"width: 45% \">Escuchar</th>\n                <th style=\"width: 10% \">Opciones</th>\n            </tr>\n            </thead>\n\n            <tbody>\n                <tr *ngFor=\"let k of sonidos | keys;let i = index;\">\n                <td>{{ i + 1 }}</td>\n                <td> {{ sonidos[k].nombre }} </td>\n                <td>\n\n                    <audio controls style=\"width: 100%\">\n                    <source [src]=\"sonidos[k].url\">\n                    Tu navegador es muy viejo\n                    </audio>\n                </td>\n                <td>\n                    <button class=\"btn btn-outline-danger\" \n                    (click)=\"borrarSonido(sonidos[k].nombre, sonidos[k].tipo, k)\" >Borrar</button>\n                </td>\n                </tr>\n            </tbody>\n\n            </table>\n    </div>   \n\n\n    <div class=\"row\" *ngIf=\"imagenes !== null\" >\n        <div *ngFor=\"let k of imagenes | keys \" >\n            <a [href]=\"imagenes[k].url\" download [title]=\"imagenes[k].nombre\">\n                <img [src]=\"imagenes[k].url\" [alt]=\"imagenes[k].nombre\">\n            </a>\n        </div>\n    </div>\n\n<!-- DIV CONTAINER FINAL -->\n</div>\n\n<!-- Modal -->\n<div class=\"modal fade\" id=\"subirDatosModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"subirDatosModalLabel\" aria-hidden=\"true\" >\n  <div class=\"modal-dialog\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\" id=\"subirDatosModalLabel\" style=\"color: black\"  >Subir los datos</h5>\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\" style=\"color: black\" >\n        Quiere subir los datos a la nube?\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-success\" (click)=\"subirArchivos()\" data-dismiss=\"modal\" >Subir datos</button>\n        <button type=\"button\" class=\"btn btn-danger\" data-dismiss=\"modal\">Cancelar</button>\n      </div>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -707,6 +707,10 @@ var LoginComponent = /** @class */ (function () {
         this.archivosSonidosASubir = [];
         this.archivosImagenesASubir = [];
         this.archivosTotalesASubir = [];
+        this.datosSonidos = false;
+        this.datosImagenes = false;
+        this.auxSonidos = null;
+        this.auxImagenes = null;
         console.log("Sonidos ", this.sonidos);
         // this.getImagenesYSonidos(); 
     }
@@ -721,7 +725,39 @@ var LoginComponent = /** @class */ (function () {
     //   console.log(this.nombre);
     //   this._datosService.cargarDatos(nuevaPersona).subscribe();
     // }
-    LoginComponent.prototype.getImagenesYSonidos = function () {
+    // getImagenesYSonidos() {
+    // if ( this._logeoService.usuario.nombre ){ 
+    //   this._datosService.getImagenes()
+    //     .subscribe( imagenes => {
+    //       if ( imagenes ) {
+    //         this.imagenes = imagenes;
+    //         console.log("Imagenes cargadas ", imagenes);
+    //     }
+    //     });
+    //   this._datosService.getSonidos()
+    //       .subscribe( sonidos => {
+    //         if ( sonidos ) {
+    //           this.sonidos = sonidos;
+    //           console.log("Sonidos cargados ", sonidos);
+    //         }
+    //       })
+    //   }
+    //   this.datosSonidos = true;
+    // }
+    LoginComponent.prototype.getSonidos = function () {
+        var _this = this;
+        if (this._logeoService.usuario.nombre) {
+            this._datosService.getSonidos()
+                .subscribe(function (sonidos) {
+                if (sonidos) {
+                    _this.sonidos = sonidos;
+                    console.log("Sonidos cargados ", sonidos);
+                }
+            });
+        }
+        this.datosSonidos = true;
+    };
+    LoginComponent.prototype.getImagenes = function () {
         var _this = this;
         if (this._logeoService.usuario.nombre) {
             this._datosService.getImagenes()
@@ -731,13 +767,29 @@ var LoginComponent = /** @class */ (function () {
                     console.log("Imagenes cargadas ", imagenes);
                 }
             });
-            this._datosService.getSonidos()
-                .subscribe(function (sonidos) {
-                if (sonidos) {
-                    _this.sonidos = sonidos;
-                    console.log("Sonidos cargados ", sonidos);
-                }
-            });
+        }
+        this.datosImagenes = true;
+    };
+    LoginComponent.prototype.toggleDatosSonidos = function () {
+        // this.datosSonidos = false;
+        // this.sonidos = null;
+        if (this.auxSonidos == null) {
+            this.auxSonidos = this.sonidos;
+            this.sonidos = null;
+        }
+        else {
+            this.sonidos = this.auxSonidos;
+            this.auxSonidos = null;
+        }
+    };
+    LoginComponent.prototype.toggleDatosImagenes = function () {
+        if (this.auxImagenes == null) {
+            this.auxImagenes = this.imagenes;
+            this.imagenes = null;
+        }
+        else {
+            this.imagenes = this.auxImagenes;
+            this.auxImagenes = null;
         }
     };
     LoginComponent.prototype.publicarDato = function () {
