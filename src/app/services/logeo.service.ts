@@ -9,6 +9,7 @@ export class LogeoService {
   public usuario: any = {
     
   };
+  public logeado : boolean = false; 
 
   constructor(
     private afs: AngularFirestore,
@@ -21,22 +22,39 @@ export class LogeoService {
         }
         this.usuario.nombre = user.displayName;
         this.usuario.uid = user.uid;
+        this.logeado = true;
       })
     }
 
     login() {
       // if ( proveedor === "google"){  
-        this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+        this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
+          .then( (success) => {
+            console.log("Logeo Exitoso");
+            this.logeado = true;
+          }).catch( 
+            (error) => {
+              console.log("Logeo No exitoso");
+              this.logeado = false;
+            }
+          );
       // } else 
       // {    this.afAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider());
       // }
     }
     logout() {
-      console.log("Estado de auth ",this.afAuth.authState.subscribe(algo => algo));
-      
+      // console.log("Estado de auth ",this.afAuth.authState.subscribe(algo => algo));
+
       this.usuario = {};
-      this.afAuth.auth.signOut();
-      console.log("Estado de auth ",this.afAuth.authState.subscribe(algo => algo));
+      this.afAuth.auth.signOut().then( (success) => {
+        this.logeado = false;
+        console.log("Se deslogeo"); 
+      } ).catch( (error) => {
+        console.log("No se pudo deslogear");
+        
+      } );
+      // console.log("Estado de auth ",this.afAuth.authState.subscribe(algo => algo));
+
     }
 
 }

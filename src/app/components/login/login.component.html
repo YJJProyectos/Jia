@@ -1,4 +1,4 @@
-<div class="container main-container">
+<div class="container main-container" style="width: 100%">
     
   <div align="center">
     <button *ngIf="!_logeoService.usuario.nombre" type="button" class="btn btn-outline-primary" (click)="login()">Ingresar</button>
@@ -34,8 +34,9 @@
         <h6 style="margin-bottom: 10px">Cargar archivos</h6>
         <input type="file" (change)="verDatos($event)" placeholder="Upload file" multiple 
                accept=".pdf,.doc,.docx,.wav,.mp3,.jpg,.png">
-        <button class="btn btn-outline-primary" *ngIf="archivosCargados" (click)="subirArchivos()" >Subir datos a la nube</button>
-        <button class="btn btn-outline-success" (click)="getImagenesYSonidos()" >Obtener Imagenes y Sonidos</button>
+        <button class="btn btn-outline-primary" [disabled]="subiendo" *ngIf="archivosCargados" (click)="subirArchivos()" >Subir datos a la nube</button>
+        <button class="btn btn-outline-success" (click)="getImagenesYSonidos()" >Ver audio subidos</button>
+        <button class="btn btn-outline-success" (click)="getImagenesYSonidos()" >Ver imagenes subidas</button>
         <button class="btn btn-outline-danger" (click)="limpiarArchivos()" >Limpiar</button>
 
     </div>
@@ -68,7 +69,7 @@
         </table>
 
 
-    <div *ngIf="sonidos !== null " >
+    <div *ngIf="sonidos !== null " style="width: 95%">
         <h5 align="center" >Audios</h5>
         <table class="table table-dark">
             <thead>
@@ -86,7 +87,7 @@
                 <td> {{ sonidos[k].nombre }} </td>
                 <td>
 
-                    <audio controls>
+                    <audio controls style="width: 100%">
                     <source [src]="sonidos[k].url">
                     Tu navegador es muy viejo
                     </audio>

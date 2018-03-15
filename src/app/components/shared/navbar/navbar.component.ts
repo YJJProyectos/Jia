@@ -1,5 +1,6 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { LogeoService } from '../../../services/logeo.service';
 
 
 @Component({
@@ -13,6 +14,7 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     private router:Router,
+    public _logeoService: LogeoService
   ) { }
 
   ngOnInit() {

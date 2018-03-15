@@ -16,9 +16,10 @@ export class LoginComponent implements OnInit {
   nombre : string;
   dato: string = "";
   archivosCargados = false;
+  subiendo = false;
   // persona: Datos;
   imagenes = null;
-  sonidos = [];
+  sonidos = null;
   archivosSonidosASubir : FileItem[] = [];
   archivosImagenesASubir: FileItem[] = [];
   archivosTotalesASubir: FileItem[] = [];
@@ -30,7 +31,7 @@ export class LoginComponent implements OnInit {
   ) {
     console.log("Sonidos ", this.sonidos);
     
-    this.getImagenesYSonidos();
+    // this.getImagenesYSonidos(); 
   }
 
   ngOnInit() {
@@ -113,12 +114,14 @@ export class LoginComponent implements OnInit {
       //cuando termina de cargar todo
       this.archivosTotalesASubir = this.archivosImagenesASubir.concat(this.archivosSonidosASubir);
       this.archivosCargados = true;
+      this.subiendo = false;
     }
       
     return 
   }
 
   subirArchivos() {
+    this.subiendo = true;
     this._cargaArchivosService.subirArchivos(this.archivosImagenesASubir, this.archivosSonidosASubir );
   }
 
