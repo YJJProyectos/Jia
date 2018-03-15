@@ -114,12 +114,25 @@
     </div>   
 
 
-    <div class="row" *ngIf="imagenes !== null" >
+    <!-- <div class="container row" *ngIf="imagenes !== null" >
         <div *ngFor="let k of imagenes | keys " >
-            <a [href]="imagenes[k].url" download>
-                <img [src]="imagenes[k].url" alt="">
+            <a [href]="imagenes[k].url" download [title]="imagenes[k].nombre">
+                <img class="img-responsive img-circle" width="100px" height="100px"  [src]="imagenes[k].url" [alt]="imagenes[k].nombre">
             </a>
         </div>
+    </div> -->
+
+    <div align="center" class="row container ">
+
+            <div *ngFor="let k of imagenes | keys ">
+                <a [href]="imagenes[k].url" download [title]="imagenes[k].nombre">
+                    <img class="img-responsive img-circle" width="150px" [src]="imagenes[k].url" [alt]="imagenes[k].nombre">
+                </a> 
+                <!-- <div class="card-body">
+                    <h5 class="card-title">{{ imagenes[k].nombre}}</h5>
+                </div> -->
+            </div>
+        
     </div>
 
 <!-- DIV CONTAINER FINAL -->
