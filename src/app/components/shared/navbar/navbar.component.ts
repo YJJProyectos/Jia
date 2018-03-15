@@ -24,6 +24,10 @@ export class NavbarComponent implements OnInit {
         $('.navbar-collapse').collapse('hide');
       });
     // }); 
+
+    $('.navbar-brand').on('click', () => {
+      $('.navbar-collapse').collapse('hide');
+    });
   }
 
   irABusqueda(buscar: string){
