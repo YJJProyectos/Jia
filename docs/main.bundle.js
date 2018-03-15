@@ -218,7 +218,7 @@ var routes = [
     { path: 'info/:heroe', component: __WEBPACK_IMPORTED_MODULE_6__components_info_info_component__["a" /* InfoComponent */] },
     { path: 'busqueda/:texto', component: __WEBPACK_IMPORTED_MODULE_7__components_busqueda_busqueda_component__["a" /* BusquedaComponent */] },
     { path: 'datos', component: __WEBPACK_IMPORTED_MODULE_9__components_datos_logeado_datos_logeado_component__["a" /* DatosLogeadoComponent */] },
-    { path: '', pathMatch: 'full', redirectTo: 'home' },
+    { path: '', pathMatch: 'full', redirectTo: 'login' },
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
@@ -665,7 +665,7 @@ var InfoComponent = /** @class */ (function () {
 /***/ "../../../../../src/app/components/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container main-container\">\n    \n  <div align=\"center\">\n    <button *ngIf=\"!_logeoService.usuario.nombre\" type=\"button\" class=\"btn btn-outline-primary\" (click)=\"login()\">Ingresar</button>\n    <button *ngIf=\"_logeoService.usuario.nombre\" type=\"button\" class=\"btn btn-outline-danger\" (click)=\"logout()\">Cerrar Sesion</button>\n  </div>\n  \n</div>\n<div class=\"container main-container\" *ngIf=\"_logeoService.usuario.nombre\">\n\n    <input class=\"form-control\" type=\"text\" [(ngModel)]=\"dato\" name=\"dato\" placeholder=\"Dato a guardar\"\n        (keyup.enter)=\"publicarDato()\">\n    <div align=\"right\">\n            <button  type=\"button\" class=\"btn btn-outline-warning\" [routerLink]=\"['/datos']\" >Ver Datos Guardados </button>\n            <button  type=\"button\" class=\"btn btn-outline-success\" (click)=\"publicarDato()\">Publicar datos</button>\n    </div>\n\n    <div class=\"row main-container\">\n        <div class=\"col-md-6\" >\n\n            <p align=\"center\">Logeado con nombre {{_logeoService.usuario.nombre}} </p>\n\n\n        </div>\n\n        <div class=\"col-md-6\">\n\n            <p align=\"center\">Logeado con UID {{_logeoService.usuario.uid}} </p>\n\n\n        </div>\n    </div>\n    <div align=\"center\" style=\"margin-bottom: 10px\" >\n        <h6 style=\"margin-bottom: 10px\">Cargar archivos</h6>\n        <input type=\"file\" (change)=\"verDatos($event)\" placeholder=\"Upload file\" multiple \n               accept=\".pdf,.doc,.docx,.wav,.mp3,.jpg,.png\">\n        <button class=\"btn btn-outline-primary\" *ngIf=\"archivosCargados\" (click)=\"subirArchivos()\" >Subir datos a la nube</button>\n        <button class=\"btn btn-outline-success\" (click)=\"getImagenesYSonidos()\" >Obtener Imagenes y Sonidos</button>\n        <button class=\"btn btn-outline-danger\" (click)=\"limpiarArchivos()\" >Limpiar</button>\n\n    </div>\n\n    <table class=\"table\" *ngIf=\"archivosTotalesASubir.length > 0\" >\n            <thead class=\"thead=dark\">\n                <tr>\n                    <th>Nombre Archivo</th>\n                    <th>Tamaño</th>\n                    <th>Progreso</th>\n                </tr>\n            </thead>\n\n            <tbody>\n                <tr *ngFor=\"let archivo of archivosTotalesASubir\">\n                    <td>{{archivo.nombreArchivo}}</td>\n                    <td>{{archivo.archivo.size /1024 / 1024 | number: '.2-2'}} MB</td>\n                    <td>\n                        <div class=\"progress\">\n                            <div class=\"progress-bar bg-danger\" [ngClass]=\"\n                            {'bg-danger': archivo.progreso <= 30,\n                             'bg-warning' : archivo.progreso > 30 && archivo.progreso <= 50,\n                             'bg-info' : archivo.progreso >50 && archivo.progreso <=75,\n                             'bg-success': archivo.progreso == 100 }\" role=\"progressbar\" [ngStyle]=\"{ width: archivo.progreso + '%' }\"></div>\n                        </div>\n                    </td>\n                </tr>\n            </tbody>\n\n        </table>\n\n\n    <div *ngIf=\"sonidos !== null \" >\n        <h5 align=\"center\" >Audios</h5>\n        <table class=\"table table-dark\">\n            <thead>\n            <tr>\n                <th>#</th>\n                <th>Nombre</th>\n                <th>Escuchar</th>\n                <th>Opciones</th>\n            </tr>\n            </thead>\n\n            <tbody>\n                <tr *ngFor=\"let k of sonidos | keys;let i = index;\">\n                <td>{{ i + 1 }}</td>\n                <td> {{ sonidos[k].nombre }} </td>\n                <td>\n\n                    <audio controls>\n                    <source [src]=\"sonidos[k].url\">\n                    Tu navegador es muy viejo\n                    </audio>\n                </td>\n                <td>\n                    <button class=\"btn btn-outline-danger\" \n                    (click)=\"borrarSonido(sonidos[k].nombre, sonidos[k].tipo, k)\" >Borrar</button>\n                </td>\n                </tr>\n            </tbody>\n\n            </table>\n    </div>   \n     <!-- <audio controls *ngFor=\"let k of sonidos | keys;let i = index;\" >\n        <source [src]=\"sonidos[k].url\">\n            Tu navegador es muy viejo\n    </audio> -->\n\n</div>"
+module.exports = "<div class=\"container main-container\" style=\"width: 100%\">\n    \n  <div align=\"center\">\n    <h1>Login</h1>\n    <h3>Subida de imagenes y audios</h3>\n    <hr>\n    <button *ngIf=\"!_logeoService.usuario.nombre\" type=\"button\" class=\"btn btn-outline-primary\" (click)=\"login()\">Ingresar</button>\n    <button *ngIf=\"_logeoService.usuario.nombre\" type=\"button\" class=\"btn btn-outline-danger\" (click)=\"logout()\">Cerrar Sesion</button>\n  </div>\n  \n</div>\n<div class=\"container main-container\" *ngIf=\"_logeoService.usuario.nombre\">\n\n    <input class=\"form-control\" type=\"text\" [(ngModel)]=\"dato\" name=\"dato\" placeholder=\"Dato a guardar\"\n        (keyup.enter)=\"publicarDato()\">\n    <div align=\"center\">\n            <button  type=\"button\" class=\"btn btn-outline-warning\" [routerLink]=\"['/datos']\" >Ver Datos Guardados </button>\n            <button  type=\"button\" class=\"btn btn-outline-success\" (click)=\"publicarDato()\">Publicar datos</button>\n    </div>\n\n    <div class=\"row main-container\">\n        <div class=\"col-md-6\" >\n\n            <p align=\"center\">Logeado con nombre {{_logeoService.usuario.nombre}} </p>\n\n\n        </div>\n\n        <div class=\"col-md-6\">\n\n            <p align=\"center\">Logeado con UID {{_logeoService.usuario.uid}} </p>\n\n\n        </div>\n    </div>\n    <div align=\"center\" style=\"margin-bottom: 10px\" >\n        <h6 style=\"margin-bottom: 10px\">Cargar archivos</h6>\n        <input type=\"file\" (change)=\"verDatos($event)\" placeholder=\"Upload file\" multiple \n               accept=\".pdf,.doc,.docx,.wav,.mp3,.jpg,.png\">\n        <button class=\"btn btn-outline-primary\" [disabled]=\"subiendo\" *ngIf=\"archivosCargados\" (click)=\"subirArchivos()\" >Subir datos a la nube</button>\n\n        <button class=\"btn btn-outline-danger\" (click)=\"limpiarArchivos()\" >Limpiar</button>\n\n    </div>\n\n    <div align=\"center\" style=\"margin-bottom: 10px\" >\n        <button class=\"btn btn-outline-success\" (click)=\"getImagenesYSonidos()\" >Ver audio subidos</button>\n        <button class=\"btn btn-outline-success\" (click)=\"getImagenesYSonidos()\" >Ver imagenes subidas</button>\n    </div>\n    \n    <table class=\"table\" *ngIf=\"archivosTotalesASubir.length > 0\" >\n            <thead class=\"thead=dark\">\n                <tr>\n                    <th>Nombre Archivo</th>\n                    <th>Tamaño</th>\n                    <th>Progreso</th>\n                </tr>\n            </thead>\n\n            <tbody>\n                <tr *ngFor=\"let archivo of archivosTotalesASubir\">\n                    <td>{{archivo.nombreArchivo}}</td>\n                    <td>{{archivo.archivo.size /1024 / 1024 | number: '.2-2'}} MB</td>\n                    <td>\n                        <div class=\"progress\">\n                            <div class=\"progress-bar bg-danger\" [ngClass]=\"\n                            {'bg-danger': archivo.progreso <= 30,\n                             'bg-warning' : archivo.progreso > 30 && archivo.progreso <= 50,\n                             'bg-info' : archivo.progreso >50 && archivo.progreso <=75,\n                             'bg-success': archivo.progreso == 100 }\" role=\"progressbar\" [ngStyle]=\"{ width: archivo.progreso + '%' }\"></div>\n                        </div>\n                    </td>\n                </tr>\n            </tbody>\n\n        </table>\n\n\n    <div *ngIf=\"sonidos !== null \" style=\"width: 95%\">\n        <h5 align=\"center\" >Audios</h5>\n        <table class=\"table table-dark\">\n            <thead>\n            <tr>\n                <th>#</th>\n                <th>Nombre</th>\n                <th>Escuchar</th>\n                <th>Opciones</th>\n            </tr>\n            </thead>\n\n            <tbody>\n                <tr *ngFor=\"let k of sonidos | keys;let i = index;\">\n                <td>{{ i + 1 }}</td>\n                <td> {{ sonidos[k].nombre }} </td>\n                <td>\n\n                    <audio controls style=\"width: 100%\">\n                    <source [src]=\"sonidos[k].url\">\n                    Tu navegador es muy viejo\n                    </audio>\n                </td>\n                <td>\n                    <button class=\"btn btn-outline-danger\" \n                    (click)=\"borrarSonido(sonidos[k].nombre, sonidos[k].tipo, k)\" >Borrar</button>\n                </td>\n                </tr>\n            </tbody>\n\n            </table>\n    </div>   \n     <!-- <audio controls *ngFor=\"let k of sonidos | keys;let i = index;\" >\n        <source [src]=\"sonidos[k].url\">\n            Tu navegador es muy viejo\n    </audio> -->\n\n</div>"
 
 /***/ }),
 
@@ -700,14 +700,15 @@ var LoginComponent = /** @class */ (function () {
         this._cargaArchivosService = _cargaArchivosService;
         this.dato = "";
         this.archivosCargados = false;
+        this.subiendo = false;
         // persona: Datos;
         this.imagenes = null;
-        this.sonidos = [];
+        this.sonidos = null;
         this.archivosSonidosASubir = [];
         this.archivosImagenesASubir = [];
         this.archivosTotalesASubir = [];
         console.log("Sonidos ", this.sonidos);
-        this.getImagenesYSonidos();
+        // this.getImagenesYSonidos(); 
     }
     LoginComponent.prototype.ngOnInit = function () {
     };
@@ -775,10 +776,12 @@ var LoginComponent = /** @class */ (function () {
             //cuando termina de cargar todo
             this.archivosTotalesASubir = this.archivosImagenesASubir.concat(this.archivosSonidosASubir);
             this.archivosCargados = true;
+            this.subiendo = false;
         }
         return;
     };
     LoginComponent.prototype.subirArchivos = function () {
+        this.subiendo = true;
         this._cargaArchivosService.subirArchivos(this.archivosImagenesASubir, this.archivosSonidosASubir);
     };
     LoginComponent.prototype.borrarSonido = function (nombre, tipoArchivo, key$) {
@@ -875,7 +878,7 @@ var SearchComponent = /** @class */ (function () {
 /***/ "../../../../../src/app/components/shared/navbar/navbar.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Image and text -->\n<nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\">\n    <a [routerLink]=\"['home']\" class=\"navbar-brand\">\n        <img src=\"assets/img/dragon.png\" width=\"30\" height=\"30\" class=\"d-inline-block align-top\" alt=\"\"> Mi app\n    </a>\n    <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n    <span class=\"navbar-toggler-icon\"></span>\n  </button>\n    <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\n        <ul class=\"navbar-nav mr-auto\">\n            <li class=\"nav-item\" routerLinkActive=\"active\">\n                <a class=\"nav-link\" [routerLink]=\"['home']\">Home</a>\n            </li>\n            <li class=\"nav-item\" routerLinkActive=\"active\">\n                <a class=\"nav-link\" [routerLink]=\"['search']\">Search</a>\n            </li>\n            <li class=\"nav-item\" routerLinkActive=\"active\">\n                <a class=\"nav-link\" [routerLink]=\"['heroes']\">Heroes</a>\n            </li>\n            <li class=\"nav-item\" routerLinkActive=\"active\">\n                <a class=\"nav-link\" [routerLink]=\"['login']\">Login</a>\n            </li>\n        </ul>\n\n\n        <form class=\"form-inline my-2 my-lg-0\" (ngSubmit)=\"irABusqueda(buscar.value)\">\n            <input class=\"form-control mr-sm-2\" type=\"search\" placeholder=\"Busqueda\" aria-label=\"Search\" #buscar>\n            <button class=\"btn btn-outline-success my-2 my-sm-0\" type=\"submit\">Buscar</button>\n        </form>\n    </div>\n\n</nav>"
+module.exports = "<!-- Image and text -->\n<nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\">\n    <a [routerLink]=\"['home']\" class=\"navbar-brand\">\n        <img src=\"assets/img/dragon.png\" width=\"30\" height=\"30\" class=\"d-inline-block align-top\" alt=\"\"> Mi app\n    </a>\n    <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n    <span class=\"navbar-toggler-icon\"></span>\n  </button>\n    <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\n        <ul class=\"navbar-nav mr-auto\">\n            <li class=\"nav-item\" routerLinkActive=\"active\">\n                <a class=\"nav-link\" [routerLink]=\"['home']\">Home</a>\n            </li>\n            <li class=\"nav-item\" routerLinkActive=\"active\">\n                <a class=\"nav-link\" [routerLink]=\"['search']\">Search</a>\n            </li>\n            <li class=\"nav-item\" routerLinkActive=\"active\">\n                <a class=\"nav-link\" [routerLink]=\"['heroes']\">Heroes</a>\n            </li>\n            <li class=\"nav-item\" routerLinkActive=\"active\">\n                <a class=\"nav-link\" [routerLink]=\"['login']\">Login</a>\n            </li>\n        </ul>\n\n    \n        <form *ngIf=\"_logeoService.logeado\" class=\"form-inline my-2 my-lg-0\" (ngSubmit)=\"irABusqueda(buscar.value)\">\n            <input class=\"form-control mr-sm-2\" type=\"search\" placeholder=\"Busqueda\" aria-label=\"Search\" #buscar>\n            <button class=\"btn btn-outline-success my-2 my-sm-0\" type=\"submit\">Buscar</button>\n        </form>\n    </div>\n\n</nav>"
 
 /***/ }),
 
@@ -886,6 +889,7 @@ module.exports = "<!-- Image and text -->\n<nav class=\"navbar navbar-expand-lg 
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NavbarComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_logeo_service__ = __webpack_require__("../../../../../src/app/services/logeo.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -897,9 +901,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var NavbarComponent = /** @class */ (function () {
-    function NavbarComponent(router) {
+    function NavbarComponent(router, _logeoService) {
         this.router = router;
+        this._logeoService = _logeoService;
         this.aBuscar = "";
     }
     NavbarComponent.prototype.ngOnInit = function () {
@@ -913,7 +919,8 @@ var NavbarComponent = /** @class */ (function () {
             template: __webpack_require__("../../../../../src/app/components/shared/navbar/navbar.component.html"),
             styles: []
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_router__["b" /* Router */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_router__["b" /* Router */],
+            __WEBPACK_IMPORTED_MODULE_2__services_logeo_service__["a" /* LogeoService */]])
     ], NavbarComponent);
     return NavbarComponent;
 }());
@@ -1330,6 +1337,7 @@ var LogeoService = /** @class */ (function () {
         this.afs = afs;
         this.afAuth = afAuth;
         this.usuario = {};
+        this.logeado = false;
         this.afAuth.authState.subscribe(function (user) {
             console.log("Estado del usuario", user);
             if (!user) {
@@ -1337,20 +1345,35 @@ var LogeoService = /** @class */ (function () {
             }
             _this.usuario.nombre = user.displayName;
             _this.usuario.uid = user.uid;
+            _this.logeado = true;
         });
     }
     LogeoService.prototype.login = function () {
+        var _this = this;
         // if ( proveedor === "google"){  
-        this.afAuth.auth.signInWithPopup(new __WEBPACK_IMPORTED_MODULE_2_firebase_app__["auth"].GoogleAuthProvider());
+        this.afAuth.auth.signInWithPopup(new __WEBPACK_IMPORTED_MODULE_2_firebase_app__["auth"].GoogleAuthProvider())
+            .then(function (success) {
+            console.log("Logeo Exitoso");
+            _this.logeado = true;
+        }).catch(function (error) {
+            console.log("Logeo No exitoso");
+            _this.logeado = false;
+        });
         // } else 
         // {    this.afAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider());
         // }
     };
     LogeoService.prototype.logout = function () {
-        console.log("Estado de auth ", this.afAuth.authState.subscribe(function (algo) { return algo; }));
+        // console.log("Estado de auth ",this.afAuth.authState.subscribe(algo => algo));
+        var _this = this;
         this.usuario = {};
-        this.afAuth.auth.signOut();
-        console.log("Estado de auth ", this.afAuth.authState.subscribe(function (algo) { return algo; }));
+        this.afAuth.auth.signOut().then(function (success) {
+            _this.logeado = false;
+            console.log("Se deslogeo");
+        }).catch(function (error) {
+            console.log("No se pudo deslogear");
+        });
+        // console.log("Estado de auth ",this.afAuth.authState.subscribe(algo => algo));
     };
     LogeoService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
