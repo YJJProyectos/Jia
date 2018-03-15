@@ -45,9 +45,10 @@
     </div>
 
     <div align="center" style="margin-bottom: 10px" >
-        <button class="btn btn-outline-success" (click)="getImagenesYSonidos()" >Ver audio subidos</button>
-        <button class="btn btn-outline-success" (click)="getImagenesYSonidos()" >Ver imagenes subidas</button>
+        <button class="btn btn-outline-success" (click)="getSonidos()" >Obtener audio subidos</button>
+        <button class="btn btn-outline-success" (click)="getImagenes()" >Obtener imagenes subidas</button>
         <button class="btn btn-outline-danger" *ngIf="datosSonidos" (click)="toggleDatosSonidos()" >Ocultar/Mostrar audios subidos</button>
+        <button class="btn btn-outline-danger" *ngIf="datosImagenes" (click)="toggleDatosImagenes()" >Ocultar/Mostrar imagenes subidas</button>
     </div>
 
     <table class="table" *ngIf="archivosTotalesASubir.length > 0" >

@@ -24,7 +24,9 @@ export class LoginComponent implements OnInit {
   archivosImagenesASubir: FileItem[] = [];
   archivosTotalesASubir: FileItem[] = [];
   datosSonidos = false;
+  datosImagenes = false;
   auxSonidos = null;
+  auxImagenes = null;
 
   constructor(
     public _datosService : DatosService,
@@ -51,17 +53,33 @@ export class LoginComponent implements OnInit {
   //   this._datosService.cargarDatos(nuevaPersona).subscribe();
   // }
 
-  getImagenesYSonidos() {
-  if ( this._logeoService.usuario.nombre ){ 
-    this._datosService.getImagenes()
-      .subscribe( imagenes => {
-        if ( imagenes ) {
+  // getImagenesYSonidos() {
+  // if ( this._logeoService.usuario.nombre ){ 
+  //   this._datosService.getImagenes()
+  //     .subscribe( imagenes => {
+  //       if ( imagenes ) {
 
-          this.imagenes = imagenes;
-          console.log("Imagenes cargadas ", imagenes);
-      }
+  //         this.imagenes = imagenes;
+  //         console.log("Imagenes cargadas ", imagenes);
+  //     }
         
-      });
+  //     });
+  //   this._datosService.getSonidos()
+  //       .subscribe( sonidos => {
+
+  //         if ( sonidos ) {
+  //           this.sonidos = sonidos;
+  //           console.log("Sonidos cargados ", sonidos);
+            
+  //         }
+  //       })
+  //   }
+  //   this.datosSonidos = true;
+  // }
+
+  getSonidos() {
+  if ( this._logeoService.usuario.nombre ){ 
+
     this._datosService.getSonidos()
         .subscribe( sonidos => {
 
@@ -75,6 +93,22 @@ export class LoginComponent implements OnInit {
     this.datosSonidos = true;
   }
 
+  getImagenes() {
+  if ( this._logeoService.usuario.nombre ){ 
+    this._datosService.getImagenes()
+      .subscribe( imagenes => {
+        if ( imagenes ) {
+
+          this.imagenes = imagenes;
+          console.log("Imagenes cargadas ", imagenes);
+      }
+        
+      });
+
+    }
+    this.datosImagenes = true;
+  }
+
   toggleDatosSonidos() {
     // this.datosSonidos = false;
     // this.sonidos = null;
@@ -85,6 +119,18 @@ export class LoginComponent implements OnInit {
       this.sonidos = this.auxSonidos;
       this.auxSonidos = null;
     }
+  }
+
+  toggleDatosImagenes() {
+
+    if ( this.auxImagenes == null ) {
+      this.auxImagenes = this.imagenes;
+      this.imagenes = null;
+    } else {
+      this.imagenes = this.auxImagenes;
+      this.auxImagenes = null;
+    }
+
   }
 
   publicarDato() {
