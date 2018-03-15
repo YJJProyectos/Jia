@@ -23,6 +23,8 @@ export class LoginComponent implements OnInit {
   archivosSonidosASubir : FileItem[] = [];
   archivosImagenesASubir: FileItem[] = [];
   archivosTotalesASubir: FileItem[] = [];
+  datosSonidos = false;
+  auxSonidos = null;
 
   constructor(
     public _datosService : DatosService,
@@ -69,6 +71,19 @@ export class LoginComponent implements OnInit {
             
           }
         })
+    }
+    this.datosSonidos = true;
+  }
+
+  toggleDatosSonidos() {
+    // this.datosSonidos = false;
+    // this.sonidos = null;
+    if ( this.auxSonidos == null ) {
+      this.auxSonidos = this.sonidos;
+      this.sonidos = null;
+    } else {
+      this.sonidos = this.auxSonidos;
+      this.auxSonidos = null;
     }
   }
 

@@ -34,7 +34,8 @@
         </div>
     </div>
     <div align="center" style="margin-bottom: 10px" >
-        <h6 style="margin-bottom: 10px">Cargar archivos</h6>
+        <h1 style="margin-bottom: 10px">Cargar archivos</h1>
+        <hr>
         <input type="file" (change)="verDatos($event)" placeholder="Upload file" multiple 
                accept=".pdf,.doc,.docx,.wav,.mp3,.jpg,.png">
         <button class="btn btn-outline-primary" [disabled]="subiendo" *ngIf="archivosCargados"  data-toggle="modal" data-target="#subirDatosModal" >Subir datos a la nube</button>
@@ -46,6 +47,7 @@
     <div align="center" style="margin-bottom: 10px" >
         <button class="btn btn-outline-success" (click)="getImagenesYSonidos()" >Ver audio subidos</button>
         <button class="btn btn-outline-success" (click)="getImagenesYSonidos()" >Ver imagenes subidas</button>
+        <button class="btn btn-outline-danger" *ngIf="datosSonidos" (click)="toggleDatosSonidos()" >Ocultar/Mostrar audios subidos</button>
     </div>
 
     <table class="table" *ngIf="archivosTotalesASubir.length > 0" >
