@@ -16,7 +16,7 @@
         (keyup.enter)="publicarDato()">
     <div align="center">
             <button  type="button" class="btn btn-outline-warning" [routerLink]="['/datos']" >Ver Datos Guardados </button>
-            <button  type="button" class="btn btn-outline-success" (click)="publicarDato()">Publicar datos</button>
+            <button  type="button" class="btn btn-outline-success" [disabled]="!dato" (click)="publicarDato()">Publicar datos</button>
     </div>
 
     <div class="row main-container">
@@ -39,7 +39,7 @@
         <hr>
         <input type="file" (change)="verDatos($event)" placeholder="Upload file" multiple 
                accept=".pdf,.doc,.docx,.wav,.mp3,.jpg,.png">
-        <button class="btn btn-outline-primary" [disabled]="subiendo" *ngIf="archivosCargados"  data-toggle="modal" data-target="#subirDatosModal" >Subir datos a la nube</button>
+        <button class="btn btn-outline-primary" [disabled]="subiendo" *ngIf="archivosCargados"  (click)="mostrarModal('cargar archivos')" >Subir datos a la nube</button>
 
         <button class="btn btn-outline-danger" (click)="limpiarArchivos()" >Limpiar</button>
 

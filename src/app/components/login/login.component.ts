@@ -6,6 +6,8 @@ import { LogeoService } from '../../services/logeo.service';
 import { CargaArchivosService } from '../../services/carga-archivos.service';
 import { FileItem } from '../../models/file-item';
 
+declare var $;
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -211,6 +213,10 @@ export class LoginComponent implements OnInit {
     this.archivosImagenesASubir = [];
     this.archivosSonidosASubir = [];
     this.archivosCargados = false;
+  }
+
+  mostrarModal( tipo : string) {
+    $('#subirDatosModal').modal('show');
   }
 
 
