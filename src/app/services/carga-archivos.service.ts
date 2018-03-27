@@ -116,6 +116,24 @@ export class CargaArchivosService {
 
   }
 
+  borrarImagen( nombre: string, tipo: string ) {
+    // Create a reference to the file to delete
+    const storageRef = firebase.storage().ref();
+    let urlNombre = `${this._datosService._logeoService.usuario.uid}/${ this.CARPETA_IMAGENES}/${ nombre }`;
+    console.log("Ruta de archivo de imagen a borrar ", urlNombre);
+    
+    var desertRef = storageRef.child(urlNombre);
+    
+    // Delete the file
+    desertRef.delete().then(function() {
+      console.log("Borrado exitoso de archivo de imagen");
+      
+    }).catch(function(error) {
+      console.error("No se pudo borrar el archivo de imagen");
+      
+    });    
+  }
+
 
   agregarImagen( imagen : File ) {
     let imagenACargar = new FileItem(imagen);

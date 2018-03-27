@@ -97,5 +97,13 @@ export class DatosService {
     return this.http.delete(url)
           .map( res => res.json());        
   }
+  borrarImagen ( key$: string ) {
+    let uid = this._logeoService.usuario.uid
+    let url = `${ this.datosURL}${ uid }/img/${ key$ }.json`;
+    console.log("La URL es : ", url);
+    
+    return this.http.delete(url)
+          .map( res => res.json());          
+  }
 
 }

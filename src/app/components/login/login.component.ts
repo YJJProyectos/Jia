@@ -212,6 +212,27 @@ export class LoginComponent implements OnInit {
     return
   }
 
+  borrarImagen( nombre : string, tipoArchivo :string, key$ ) {
+
+    console.log("Tipo ", tipoArchivo);
+    this._cargaArchivosService.borrarImagen(nombre, tipoArchivo);
+    console.log("Borrar del arreglo de imagenes ", this.imagenes[key$]);
+    
+    this._datosService.borrarImagen(key$).subscribe( respuesta => {
+      // console.log(respuesta);
+      if (respuesta) {
+        console.error(respuesta);
+        
+      } else {
+        // si se borra
+        delete this.imagenes[key$];
+        console.log("Cantidad de sonidos restante ", );
+        
+      }
+    });
+    return
+  }
+
   limpiarArchivos() {
     this.archivosTotalesASubir = [];
     this.archivosImagenesASubir = [];
