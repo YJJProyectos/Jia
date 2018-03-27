@@ -39,7 +39,7 @@
         <hr>
         <input type="file" (change)="verDatos($event)" placeholder="Upload file" multiple 
                accept=".pdf,.doc,.docx,.wav,.mp3,.jpg,.png">
-        <button class="btn btn-outline-primary" [disabled]="subiendo" *ngIf="archivosCargados"  (click)="mostrarModal('cargar archivos')" >Subir datos a la nube</button>
+        <button class="btn btn-outline-primary" [disabled]="subiendo" *ngIf="archivosCargados"  (click)="mostrarModal('cargar archivos')" >Subir archivos a la nube</button>
 
         <button class="btn btn-outline-danger" (click)="limpiarArchivos()" >Limpiar</button>
 
@@ -143,16 +143,16 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="subirDatosModalLabel" style="color: black"  >Subir los datos</h5>
+        <h5 class="modal-title" id="subirDatosModalLabel" style="color: black"  >Subir los {{tipoDeSubida}}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body" style="color: black" >
-        Quiere subir los datos a la nube?
+        Quiere subir los {{tipoDeSubida}} a la nube?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" (click)="subirArchivos()" data-dismiss="modal" >Subir datos</button>
+        <button type="button" class="btn btn-success" (click)="subirArchivos()" data-dismiss="modal" >Subir {{tipoDeSubida}}</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
       </div>
     </div>

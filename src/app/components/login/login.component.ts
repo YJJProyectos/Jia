@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
   datosImagenes = false;
   auxSonidos = null;
   auxImagenes = null;
+  tipoDeSubida;
 
   constructor(
     public _datosService : DatosService,
@@ -216,7 +217,19 @@ export class LoginComponent implements OnInit {
   }
 
   mostrarModal( tipo : string) {
-    $('#subirDatosModal').modal('show');
+    switch (tipo) {
+      case 'cargar archivos': {
+
+        this.tipoDeSubida = "archivos";
+        $('#subirDatosModal').modal('show');
+        break;
+      }
+      case 'subir datos': {
+        this.tipoDeSubida = "datos";
+        $('#subirDatosModal').modal('show');
+        break;
+      }
+    }
   }
 
 
