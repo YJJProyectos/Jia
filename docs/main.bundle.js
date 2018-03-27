@@ -665,7 +665,7 @@ var InfoComponent = /** @class */ (function () {
 /***/ "../../../../../src/app/components/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container main-container\" style=\"width: 100%\">\n    \n  <div align=\"center\">\n    <h1>Login</h1>\n    <h3>Subida de imagenes y audios</h3>\n    <hr>\n    <button *ngIf=\"!_logeoService.usuario.nombre\" type=\"button\" class=\"btn btn-outline-primary\" (click)=\"login()\">Ingresar</button>\n    <button *ngIf=\"_logeoService.usuario.nombre\" type=\"button\" class=\"btn btn-outline-danger\" (click)=\"logout()\">Cerrar Sesion</button>\n  </div>\n  \n</div>\n\n<div class=\"container main-container\" *ngIf=\"_logeoService.usuario.nombre\">\n\n    <input class=\"form-control\" type=\"text\" [(ngModel)]=\"dato\" name=\"dato\" placeholder=\"Dato a guardar\"\n        (keyup.enter)=\"publicarDato()\">\n    <div align=\"center\">\n            <button  type=\"button\" class=\"btn btn-outline-warning\" [routerLink]=\"['/datos']\" >Ver Datos Guardados </button>\n            <button  type=\"button\" class=\"btn btn-outline-success\" (click)=\"publicarDato()\">Publicar datos</button>\n    </div>\n\n    <div class=\"row main-container\">\n        <div class=\"col-md-6\" >\n\n            <p align=\"center\">Logeado con nombre {{_logeoService.usuario.nombre}} </p>\n\n\n        </div>\n\n        <div class=\"col-md-6\">\n\n            <p align=\"center\">Logeado con UID {{_logeoService.usuario.uid}} </p>\n\n\n        </div>\n    </div>\n    <div align=\"center\" style=\"margin-bottom: 10px\" >\n        <h1 style=\"margin-bottom: 10px\">Cargar archivos</h1>\n        <hr>\n        <input type=\"file\" (change)=\"verDatos($event)\" placeholder=\"Upload file\" multiple \n               accept=\".pdf,.doc,.docx,.wav,.mp3,.jpg,.png\">\n        <button class=\"btn btn-outline-primary\" [disabled]=\"subiendo\" *ngIf=\"archivosCargados\"  data-toggle=\"modal\" data-target=\"#subirDatosModal\" >Subir datos a la nube</button>\n\n        <button class=\"btn btn-outline-danger\" (click)=\"limpiarArchivos()\" >Limpiar</button>\n\n    </div>\n\n    <div align=\"center\" style=\"margin-bottom: 10px\" >\n        <button class=\"btn btn-outline-success\" (click)=\"getSonidos()\" >Obtener audio subidos</button>\n        <button class=\"btn btn-outline-success\" (click)=\"getImagenes()\" >Obtener imagenes subidas</button>\n        <button class=\"btn btn-outline-danger\" *ngIf=\"datosSonidos\" (click)=\"toggleDatosSonidos()\" >Ocultar/Mostrar audios subidos</button>\n        <button class=\"btn btn-outline-danger\" *ngIf=\"datosImagenes\" (click)=\"toggleDatosImagenes()\" >Ocultar/Mostrar imagenes subidas</button>\n    </div>\n\n    <table class=\"table\" *ngIf=\"archivosTotalesASubir.length > 0\" >\n            <thead class=\"thead=dark\">\n                <tr>\n                    <th>Nombre Archivo</th>\n                    <th>Tamaño</th>\n                    <th>Progreso</th>\n                </tr>\n            </thead>\n\n            <tbody>\n                <tr *ngFor=\"let archivo of archivosTotalesASubir\">\n                    <td>{{archivo.nombreArchivo}}</td>\n                    <td>{{archivo.archivo.size /1024 / 1024 | number: '.2-2'}} MB</td>\n                    <td>\n                        <div class=\"progress\">\n                            <div class=\"progress-bar bg-danger\" [ngClass]=\"\n                            {'bg-danger': archivo.progreso <= 30,\n                             'bg-warning' : archivo.progreso > 30 && archivo.progreso <= 50,\n                             'bg-info' : archivo.progreso >50 && archivo.progreso <=75,\n                             'bg-success': archivo.progreso == 100 }\" role=\"progressbar\" [ngStyle]=\"{ width: archivo.progreso + '%' }\"></div>\n                        </div>\n                    </td>\n                </tr>\n            </tbody>\n\n        </table>\n\n\n    <div *ngIf=\"sonidos !== null \" style=\"width: 95%\">\n        <h5 align=\"center\" >Audios</h5>\n        <table class=\"table table-dark\">\n            <thead>\n            <tr>\n                <th style=\"width: 5% \">#</th>\n                <th style=\"width: 30% \">Nombre</th>\n                <th style=\"width: 51% \">Escuchar</th>\n                <th style=\"width: 7% \">Opciones</th>\n            </tr>\n            </thead>\n\n            <tbody>\n                <tr *ngFor=\"let k of sonidos | keys;let i = index;\">\n                <td>{{ i + 1 }}</td>\n                <td> {{ sonidos[k].nombre }} </td>\n                <td>\n\n                    <audio controls style=\"width: 100%\">\n                    <source [src]=\"sonidos[k].url\">\n                    Tu navegador es muy viejo\n                    </audio>\n                </td>\n                <td>\n                    <button class=\"btn btn-outline-danger\" \n                    (click)=\"borrarSonido(sonidos[k].nombre, sonidos[k].tipo, k)\" >Borrar</button>\n                </td>\n                </tr>\n            </tbody>\n\n            </table>\n    </div>   \n\n\n    <!-- <div class=\"container row\" *ngIf=\"imagenes !== null\" >\n        <div *ngFor=\"let k of imagenes | keys \" >\n            <a [href]=\"imagenes[k].url\" download [title]=\"imagenes[k].nombre\">\n                <img class=\"img-responsive img-circle\" width=\"100px\" height=\"100px\"  [src]=\"imagenes[k].url\" [alt]=\"imagenes[k].nombre\">\n            </a>\n        </div>\n    </div> -->\n\n    <div align=\"center\" class=\"row container \">\n\n            <div *ngFor=\"let k of imagenes | keys \">\n                <a [href]=\"imagenes[k].url\" download [title]=\"imagenes[k].nombre\">\n                    <img class=\"img-responsive img-circle\" width=\"150px\" [src]=\"imagenes[k].url\" [alt]=\"imagenes[k].nombre\">\n                </a> \n                <!-- <div class=\"card-body\">\n                    <h5 class=\"card-title\">{{ imagenes[k].nombre}}</h5>\n                </div> -->\n            </div>\n        \n    </div>\n\n<!-- DIV CONTAINER FINAL -->\n</div>\n\n<!-- Modal -->\n<div class=\"modal fade\" id=\"subirDatosModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"subirDatosModalLabel\" aria-hidden=\"true\" >\n  <div class=\"modal-dialog\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\" id=\"subirDatosModalLabel\" style=\"color: black\"  >Subir los datos</h5>\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\" style=\"color: black\" >\n        Quiere subir los datos a la nube?\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-success\" (click)=\"subirArchivos()\" data-dismiss=\"modal\" >Subir datos</button>\n        <button type=\"button\" class=\"btn btn-danger\" data-dismiss=\"modal\">Cancelar</button>\n      </div>\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"container main-container\" style=\"width: 100%\">\r\n    \r\n  <div align=\"center\">\r\n    <h1>Login</h1>\r\n    <h3>Subida de imagenes y audios</h3>\r\n    <hr>\r\n    <button *ngIf=\"!_logeoService.usuario.nombre\" type=\"button\" class=\"btn btn-outline-primary\" (click)=\"login()\">Ingresar</button>\r\n    <button *ngIf=\"_logeoService.usuario.nombre\" type=\"button\" class=\"btn btn-outline-danger\" (click)=\"logout()\">Cerrar Sesion</button>\r\n  </div>\r\n  \r\n</div>\r\n\r\n<div class=\"container main-container\" *ngIf=\"_logeoService.usuario.nombre\">\r\n\r\n    <input class=\"form-control\" type=\"text\" [(ngModel)]=\"dato\" name=\"dato\" placeholder=\"Dato a guardar\"\r\n        (keyup.enter)=\"mostrarModal('subir datos')\">\r\n    <div align=\"center\">\r\n            <button  type=\"button\" class=\"btn btn-outline-warning\" [routerLink]=\"['/datos']\" >Ver Datos Guardados </button>\r\n            <button  type=\"button\" class=\"btn btn-outline-success\" [disabled]=\"!dato\" (click)=\"mostrarModal('subir datos')\">Publicar datos</button>\r\n    </div>\r\n\r\n    <div class=\"row main-container\">\r\n        <div class=\"col-md-6\" >\r\n\r\n            <p align=\"center\">Logeado con nombre {{_logeoService.usuario.nombre}} </p>\r\n\r\n\r\n        </div>\r\n\r\n        <div class=\"col-md-6\">\r\n\r\n            <p align=\"center\">Logeado con UID {{_logeoService.usuario.uid}} </p>\r\n\r\n\r\n        </div>\r\n    </div>\r\n    <div align=\"center\" style=\"margin-bottom: 10px\" >\r\n        <h1 style=\"margin-bottom: 10px\">Cargar archivos</h1>\r\n        <hr>\r\n        <input type=\"file\" (change)=\"verDatos($event)\" placeholder=\"Upload file\" multiple \r\n               accept=\".pdf,.doc,.docx,.wav,.mp3,.jpg,.png\">\r\n        <button class=\"btn btn-outline-primary\" [disabled]=\"subiendo\" *ngIf=\"archivosCargados\"  (click)=\"mostrarModal('cargar archivos')\" >Subir archivos a la nube</button>\r\n\r\n        <button class=\"btn btn-outline-danger\" (click)=\"limpiarArchivos()\" >Limpiar</button>\r\n\r\n    </div>\r\n\r\n    <div align=\"center\" style=\"margin-bottom: 10px\" >\r\n        <button class=\"btn btn-outline-success\" (click)=\"getSonidos()\" >Obtener audio subidos</button>\r\n        <button class=\"btn btn-outline-success\" (click)=\"getImagenes()\" >Obtener imagenes subidas</button>\r\n        <button class=\"btn btn-outline-danger\" *ngIf=\"datosSonidos\" (click)=\"toggleDatosSonidos()\" >Ocultar/Mostrar audios subidos</button>\r\n        <button class=\"btn btn-outline-danger\" *ngIf=\"datosImagenes\" (click)=\"toggleDatosImagenes()\" >Ocultar/Mostrar imagenes subidas</button>\r\n    </div>\r\n\r\n    <table class=\"table\" *ngIf=\"archivosTotalesASubir.length > 0\" >\r\n            <thead class=\"thead=dark\">\r\n                <tr>\r\n                    <th>Nombre Archivo</th>\r\n                    <th>Tamaño</th>\r\n                    <th>Progreso</th>\r\n                </tr>\r\n            </thead>\r\n\r\n            <tbody>\r\n                <tr *ngFor=\"let archivo of archivosTotalesASubir\">\r\n                    <td>{{archivo.nombreArchivo}}</td>\r\n                    <td>{{archivo.archivo.size /1024 / 1024 | number: '.2-2'}} MB</td>\r\n                    <td>\r\n                        <div class=\"progress\">\r\n                            <div class=\"progress-bar bg-danger\" [ngClass]=\"\r\n                            {'bg-danger': archivo.progreso <= 30,\r\n                             'bg-warning' : archivo.progreso > 30 && archivo.progreso <= 50,\r\n                             'bg-info' : archivo.progreso >50 && archivo.progreso <=75,\r\n                             'bg-success': archivo.progreso == 100 }\" role=\"progressbar\" [ngStyle]=\"{ width: archivo.progreso + '%' }\"\r\n                             style=\"color: black\" >{{archivo.progreso | number: '.2-2'}}%</div>\r\n                        </div>\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n\r\n        </table>\r\n\r\n\r\n    <div *ngIf=\"sonidos !== null \" style=\"width: 95%\">\r\n        <h5 align=\"center\" >Audios</h5>\r\n        <table class=\"table table-dark\">\r\n            <thead>\r\n            <tr>\r\n                <th style=\"width: 5% \">#</th>\r\n                <th style=\"width: 30% \">Nombre</th>\r\n                <th style=\"width: 51% \">Escuchar</th>\r\n                <th style=\"width: 7% \">Opciones</th>\r\n            </tr>\r\n            </thead>\r\n\r\n            <tbody>\r\n                <tr *ngFor=\"let k of sonidos | keys;let i = index;\">\r\n                <td>{{ i + 1 }}</td>\r\n                <td> {{ sonidos[k].nombre }} </td>\r\n                <td>\r\n\r\n                    <audio controls style=\"width: 100%\">\r\n                    <source [src]=\"sonidos[k].url\">\r\n                    Tu navegador es muy viejo\r\n                    </audio>\r\n                </td>\r\n                <td>\r\n                    <button class=\"btn btn-outline-danger\" \r\n                    (click)=\"borrarSonido(sonidos[k].nombre, sonidos[k].tipo, k)\" >Borrar</button>\r\n                </td>\r\n                </tr>\r\n            </tbody>\r\n\r\n            </table>\r\n    </div>   \r\n\r\n\r\n    <!-- <div class=\"container row\" *ngIf=\"imagenes !== null\" >\r\n        <div *ngFor=\"let k of imagenes | keys \" >\r\n            <a [href]=\"imagenes[k].url\" download [title]=\"imagenes[k].nombre\">\r\n                <img class=\"img-responsive img-circle\" width=\"100px\" height=\"100px\"  [src]=\"imagenes[k].url\" [alt]=\"imagenes[k].nombre\">\r\n            </a>\r\n        </div>\r\n    </div> -->\r\n\r\n    <div align=\"center\" class=\"row container \">\r\n\r\n            <div *ngFor=\"let k of imagenes | keys \">\r\n                <a [href]=\"imagenes[k].url\" download [title]=\"imagenes[k].nombre\">\r\n                    <img class=\"img-responsive img-circle\" width=\"150px\" [src]=\"imagenes[k].url\" [alt]=\"imagenes[k].nombre\">\r\n                </a>\r\n                <button class=\"btn btn-outline-danger\" (click)=\"borrarImagen(imagenes[k].nombre, imagenes[k].tipo, k)\" >Borrar </button> \r\n                <!-- <div class=\"card-body\">\r\n                    <h5 class=\"card-title\">{{ imagenes[k].nombre}}</h5>\r\n                </div> -->\r\n            </div>\r\n        \r\n    </div>\r\n\r\n<!-- DIV CONTAINER FINAL -->\r\n</div>\r\n\r\n<!-- Modal -->\r\n<div class=\"modal fade\" id=\"subirDatosModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"subirDatosModalLabel\" aria-hidden=\"true\" >\r\n  <div class=\"modal-dialog\" role=\"document\">\r\n    <div class=\"modal-content\">\r\n      <div class=\"modal-header\">\r\n        <h5 class=\"modal-title\" id=\"subirDatosModalLabel\" style=\"color: black\"  >Subir los {{tipoDeSubida}}</h5>\r\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\r\n          <span aria-hidden=\"true\">&times;</span>\r\n        </button>\r\n      </div>\r\n      <div class=\"modal-body\" style=\"color: black\" >\r\n        Quiere subir los {{tipoDeSubida}} a la nube?\r\n      </div>\r\n      <div class=\"modal-footer\">\r\n        <button type=\"button\" class=\"btn btn-success\" (click)=\"subir()\" data-dismiss=\"modal\" >Subir {{tipoDeSubida}}</button>\r\n        <button type=\"button\" class=\"btn btn-danger\" data-dismiss=\"modal\">Cancelar</button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>"
 
 /***/ }),
 
@@ -711,6 +711,9 @@ var LoginComponent = /** @class */ (function () {
         this.datosImagenes = false;
         this.auxSonidos = null;
         this.auxImagenes = null;
+        this.subir = function () {
+            console.log("subir");
+        };
         console.log("Sonidos ", this.sonidos);
         // this.getImagenesYSonidos(); 
     }
@@ -854,11 +857,45 @@ var LoginComponent = /** @class */ (function () {
         });
         return;
     };
+    LoginComponent.prototype.borrarImagen = function (nombre, tipoArchivo, key$) {
+        var _this = this;
+        console.log("Tipo ", tipoArchivo);
+        this._cargaArchivosService.borrarImagen(nombre, tipoArchivo);
+        console.log("Borrar del arreglo de imagenes ", this.imagenes[key$]);
+        this._datosService.borrarImagen(key$).subscribe(function (respuesta) {
+            // console.log(respuesta);
+            if (respuesta) {
+                console.error(respuesta);
+            }
+            else {
+                // si se borra
+                delete _this.imagenes[key$];
+                console.log("Cantidad de sonidos restante ");
+            }
+        });
+        return;
+    };
     LoginComponent.prototype.limpiarArchivos = function () {
         this.archivosTotalesASubir = [];
         this.archivosImagenesASubir = [];
         this.archivosSonidosASubir = [];
         this.archivosCargados = false;
+    };
+    LoginComponent.prototype.mostrarModal = function (tipo) {
+        switch (tipo) {
+            case 'cargar archivos': {
+                this.tipoDeSubida = "archivos";
+                this.subir = this.subirArchivos;
+                $('#subirDatosModal').modal('show');
+                break;
+            }
+            case 'subir datos': {
+                this.tipoDeSubida = "datos";
+                this.subir = this.publicarDato;
+                $('#subirDatosModal').modal('show');
+                break;
+            }
+        }
     };
     LoginComponent.prototype.login = function () {
         this._logeoService.login();
@@ -1168,6 +1205,19 @@ var CargaArchivosService = /** @class */ (function () {
             console.error("No se pudo borrar el archivo de sonido");
         });
     };
+    CargaArchivosService.prototype.borrarImagen = function (nombre, tipo) {
+        // Create a reference to the file to delete
+        var storageRef = __WEBPACK_IMPORTED_MODULE_1_firebase__["storage"]().ref();
+        var urlNombre = this._datosService._logeoService.usuario.uid + "/" + this.CARPETA_IMAGENES + "/" + nombre;
+        console.log("Ruta de archivo de imagen a borrar ", urlNombre);
+        var desertRef = storageRef.child(urlNombre);
+        // Delete the file
+        desertRef.delete().then(function () {
+            console.log("Borrado exitoso de archivo de imagen");
+        }).catch(function (error) {
+            console.error("No se pudo borrar el archivo de imagen");
+        });
+    };
     CargaArchivosService.prototype.agregarImagen = function (imagen) {
         var imagenACargar = new __WEBPACK_IMPORTED_MODULE_2__models_file_item__["a" /* FileItem */](imagen);
         this.imagenes.push(imagenACargar);
@@ -1280,6 +1330,13 @@ var DatosService = /** @class */ (function () {
     DatosService.prototype.borrarSonido = function (key$) {
         var uid = this._logeoService.usuario.uid;
         var url = "" + this.datosURL + uid + "/sound/" + key$ + ".json";
+        console.log("La URL es : ", url);
+        return this.http.delete(url)
+            .map(function (res) { return res.json(); });
+    };
+    DatosService.prototype.borrarImagen = function (key$) {
+        var uid = this._logeoService.usuario.uid;
+        var url = "" + this.datosURL + uid + "/img/" + key$ + ".json";
         console.log("La URL es : ", url);
         return this.http.delete(url)
             .map(function (res) { return res.json(); });
