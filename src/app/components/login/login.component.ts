@@ -30,6 +30,8 @@ export class LoginComponent implements OnInit {
   auxSonidos = null;
   auxImagenes = null;
   tipoDeSubida;
+  subir = function () { console.log("subir");
+  };
 
   constructor(
     public _datosService : DatosService,
@@ -43,6 +45,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
   }
+
 
   // login() {
 
@@ -221,11 +224,13 @@ export class LoginComponent implements OnInit {
       case 'cargar archivos': {
 
         this.tipoDeSubida = "archivos";
+        this.subir = this.subirArchivos;
         $('#subirDatosModal').modal('show');
         break;
       }
       case 'subir datos': {
         this.tipoDeSubida = "datos";
+        this.subir = this.publicarDato;
         $('#subirDatosModal').modal('show');
         break;
       }
